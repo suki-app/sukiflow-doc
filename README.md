@@ -9,13 +9,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/sukiflow-ai/downloads/releases/latest/download/SukiFlow_Setup_v1.0.0.exe"><img alt="Tải SukiFlow cho Windows" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
+  <a href="https://github.com/suki-app/sukiflow-doc/releases/latest/download/SukiFlow_Setup_v1.0.0.exe"><img alt="Tải SukiFlow cho Windows" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
   &nbsp;
-  <a href="https://github.com/sukiflow-ai/downloads/releases/latest/download/SukiFlow_macOS_v1.0.0_arm64.dmg"><img alt="Tải SukiFlow cho macOS" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-macOS-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://github.com/suki-app/sukiflow-doc/releases/latest/download/SukiFlow_macOS_v1.0.0_arm64.dmg"><img alt="Tải SukiFlow cho macOS" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-macOS-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/sukiflow-ai/downloads/releases/latest">Phiên bản mới nhất</a>
+  <a href="README_EN.md">English</a>
+  ·
+  <a href="https://github.com/suki-app/sukiflow-doc/releases/latest">Phiên bản mới nhất</a>
   ·
   <a href="#cài-đặt">Hướng dẫn cài đặt</a>
   ·
@@ -319,7 +321,7 @@ SukiFlow kiểm tra chính sách phiên bản khi khởi động. Khi có bản 
 
 Luôn tải bản chính thức tại:
 
-**[GitHub Releases — SukiFlow](https://github.com/sukiflow-ai/downloads/releases/latest)**
+**[GitHub Releases — SukiFlow](https://github.com/suki-app/sukiflow-doc/releases/latest)**
 
 ---
 
