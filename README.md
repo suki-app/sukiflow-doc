@@ -1,227 +1,334 @@
-<h1 align="center">⚡ PixelFlow Studio</h1>
+<p align="center">
+  <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="120">
+</p>
 
-<p align="center"><b>Ứng dụng Desktop chuyên nghiệp để tạo hàng loạt ảnh AI trên Google Flow (Nano Banana, Imagen 3.5, Gemini Pro) với hiệu suất tối đa, quản lý hàng đợi FIFO, kho nhân vật tham chiếu và Webhook API tự động hóa.</b></p>
+<h1 align="center">SukiFlow</h1>
 
 <p align="center">
-  <a href="dist_releases/PixelFlow_Windows_v2.0.zip"><img alt="Tải về cho Windows" src="https://img.shields.io/badge/T%E1%BA%A3i%20v%E1%BB%81-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>&nbsp;
-  <a href="dist_releases/PixelFlow_macOS_v2.0.dmg"><img alt="Tải về cho macOS (DMG)" src="https://img.shields.io/badge/T%E1%BA%A3i%20v%E1%BB%81-macOS%20DMG-000000?style=for-the-badge&logo=apple&logoColor=white"></a>&nbsp;
-  <a href="dist_releases/PixelFlow_macOS_v2.0.zip"><img alt="Tải về cho macOS (ZIP)" src="https://img.shields.io/badge/T%E1%BA%A3i%20v%E1%BB%81-macOS%20ZIP-555555?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <strong>Giải pháp tự động hoá tạo ảnh &amp; video AI hàng loạt tối ưu trên các nền tảng.</strong>
 </p>
+
+<p align="center">
+  <a href="https://github.com/sukiflow-ai/downloads/releases/latest/download/SukiFlow_Setup_v1.0.0.exe"><img alt="Tải SukiFlow cho Windows" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
+  &nbsp;
+  <a href="https://github.com/sukiflow-ai/downloads/releases/latest/download/SukiFlow_macOS_v1.0.0_arm64.dmg"><img alt="Tải SukiFlow cho macOS" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-macOS-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/sukiflow-ai/downloads/releases/latest">Phiên bản mới nhất</a>
+  ·
+  <a href="#cài-đặt">Hướng dẫn cài đặt</a>
+  ·
+  <a href="#khắc-phục-sự-cố">Khắc phục sự cố</a>
+</p>
+
+> Phiên bản hiện tại: **SukiFlow 1.0.0**. SukiFlow là ứng dụng desktop dành cho Windows và macOS. Các tính năng phụ thuộc vào dịch vụ bên thứ ba có thể thay đổi theo tài khoản, khu vực, hạn mức và chính sách của từng nền tảng.
 
 ---
 
-## 📑 Mục lục
+## Tổng quan
+
+SukiFlow tập trung nhiều quy trình tạo ảnh và video AI vào một ứng dụng duy nhất. Bạn có thể nhập prompt hàng loạt, quản lý nhiều tài khoản liên kết, chạy tác vụ theo hàng đợi, lưu lại phiên làm việc và chuyển kết quả giữa các công cụ mà không phải tổ chức file thủ công.
+
+Các nhóm chức năng chính:
+
+- **Google Flow:** tạo ảnh và video hàng loạt bằng Flow Image, Flow Video.
+- **Google Pics:** tạo ảnh hàng loạt, dùng ảnh tham chiếu và chuyển kết quả sang Flow Video hoặc Auto Flow.
+- **Google Vids:** tạo video và ảnh, quản lý hàng đợi và chuyển video sang Auto Flow.
+- **Muse AI:** tạo video qua phiên trình duyệt Muse AI; khả năng sử dụng phụ thuộc tài khoản và khu vực.
+- **Auto Flow:** dựng video từ ảnh, nhiều video, stock footage hoặc kịch bản Draw Video.
+- **Linked Accounts:** quản lý riêng tài khoản Google Flow, Google Vids, Google Pics và Muse AI.
+- **Thư viện sáng tạo:** lưu Character, Visual, Narrative và Voice preset để tái sử dụng.
+- **Quản lý tác vụ:** chạy ngay, chạy các mục đã chọn, chạy lại mục lỗi, hàng đợi FIFO và khôi phục phiên cũ.
+
+![Giao diện Flow Image của SukiFlow](docs/images/flow-image.png)
+
+## Mục lục
+
 - [Cài đặt](#cài-đặt)
-  - [Bước 1 — Tải phiên bản phù hợp](#bước-1--tải-phiên-bản-phù-hợp)
-  - [Bước 2 — Cài đặt trên máy](#bước-2--cài-đặt-trên-máy)
-  - [Bước 3 — Kết nối Google Flow](#bước-3--kết-nối-google-flow)
-- [Tính năng cốt lõi](#tính-năng-cốt-lõi)
-- [Hướng dẫn chi tiết từng màn hình](#hướng-dẫn-chi-tiết-từng-màn-hình)
-  - [1. Flow Image — Trình tạo ảnh hàng loạt](#1-flow-image--trình-tạo-ảnh-hàng-lượt)
-  - [2. Hàng đợi tác vụ (Task Queue FIFO)](#2-hàng-đợi-tác-vụ-task-queue-fifo)
-  - [3. Kho nhân vật & Phong cách (Character & Style)](#3-kho-nhân-vật--phong-cách-character--style)
-  - [4. Xác thực & Cầu nối Chrome Extension](#4-xác-thực--cầu-nối-chrome-extension)
-  - [5. Cài đặt chung & Quy tắc đặt tên file](#5-cài-đặt-chung--quy-tắc-đặt-tên-file)
-  - [6. Webhook API Cục bộ](#6-webhook-api-cục-bộ)
-- [Nơi lưu trữ dữ liệu](#nơi-lưu-trữ-dữ-liệu)
-- [Khắc phục sự cố thường gặp (FAQ)](#khắc-phục-sự-cố-thường-gặp-faq)
+- [Bắt đầu sử dụng](#bắt-đầu-sử-dụng)
+- [Google Flow](#google-flow)
+- [Google Pics](#google-pics)
+- [Google Vids](#google-vids)
+- [Muse AI](#muse-ai)
+- [Auto Flow](#auto-flow)
+- [Thư viện Character, Visual, Narrative và Voice](#thư-viện-character-visual-narrative-và-voice)
+- [Dữ liệu và quyền riêng tư](#dữ-liệu-và-quyền-riêng-tư)
+- [Khắc phục sự cố](#khắc-phục-sự-cố)
 
 ---
 
 ## Cài đặt
 
-### Bước 1 — Tải phiên bản phù hợp
+### Yêu cầu hệ thống
 
-Tải gói cài đặt tương ứng với hệ điều hành của bạn:
-
-| Hệ điều hành | File cài đặt | Định dạng | Ghi chú |
-|---|---|---|---|
-| 🍎 **macOS (Apple Silicon & Intel)** | **`PixelFlow_macOS_v2.0.dmg`** | File đĩa DMG | Khuyên dùng cho macOS 12+ |
-| 🍎 **macOS (Bản nén ZIP)** | **`PixelFlow_macOS_v2.0.zip`** | File nén ZIP | Giải nén dùng ngay |
-| 🪟 **Windows 10/11 (64-bit)** | **`PixelFlow_Windows_v2.0.zip`** | Bản Portable / Installer | Hỗ trợ Windows 10/11 |
-
----
-
-### Bước 2 — Cài đặt trên máy
-
-<details open>
-<summary><b>🍎 Hướng dẫn cài đặt trên macOS</b></summary>
-
-1. Mở file **`PixelFlow_macOS_v2.0.dmg`** vừa tải về.
-2. Kéo biểu tượng **PixelFlow.app** thả vào thư mục **Applications**.
-3. **Mở lần đầu**:
-   - Vào thư mục `Applications`, **bấm chuột phải** (hoặc giữ phím `Control` rồi bấm chuột) vào **PixelFlow** → chọn **Open** → bấm **Open** ở hộp thoại xác nhận của macOS.
-4. *(Tùy chọn)* Nếu máy hiển thị cảnh báo *"Ứng dụng bị hỏng hoặc không thể mở"* do cơ chế Gatekeeper của macOS, mở **Terminal** và dán lệnh sau:
-   ```bash
-   xattr -dr com.apple.quarantine "/Applications/PixelFlow.app"
-   ```
-5. Nhấp đúp chuột để mở ứng dụng bình thường ở những lần tiếp theo.
-
-</details>
-
-<details open>
-<summary><b>🪟 Hướng dẫn cài đặt trên Windows</b></summary>
-
-1. Giải nén file **`PixelFlow_Windows_v2.0.zip`** vào một thư mục (ví dụ `D:\PixelFlow`).
-2. Mở file **`PixelFlow.exe`** (hoặc chạy `Chay_PixelFlow_Windows.bat`).
-3. Nếu Windows SmartScreen hiển thị thông báo *"Windows protected your PC"*:
-   - Bấm **More info** → chọn **Run anyway**.
-4. Ứng dụng sẽ tự động mở giao diện PixelFlow Studio trong cửa sổ App Mode độc lập.
-
-</details>
-
----
-
-### Bước 3 — Kết nối Google Flow
-
-PixelFlow hỗ trợ **2 cơ chế kết nối linh hoạt**:
-
-1. **Cơ chế Trình duyệt Tự động (Khuyên dùng)**:
-   - Khi khởi động, ứng dụng tự động mở phiên trình duyệt riêng biệt kết nối trực tiếp đến Google Flow.
-   - Bạn chỉ cần đăng nhập tài khoản Google Flow một lần đầu, phiên làm việc sẽ được duy trì và tự động làm nóng dự án `PixelFlow Session`.
-2. **Cơ chế Chrome Extension Bridge**:
-   - Dùng khi bạn muốn kết nối qua profile Chrome cá nhân hoặc trình duyệt Antidetect Browser (Genlogin, MoreLogin, AdsPower...).
-   - Vào `chrome://extensions/` → Bật **Developer mode** → Chọn **Load unpacked** thư mục `extension` trong PixelFlow.
-
----
-
-## Tính năng cốt lõi
-
-![PixelFlow Studio Overview](docs/screenshots/01-flow-image.png)
-
-- ⚡ **Hiệu suất cực cao — Giữ phiên duy nhất**: Trình duyệt Google Flow chỉ mở đúng 1 lần khi bắt đầu và được duy trì liên tục. Loại bỏ hoàn toàn tình trạng tải lại trang web giữa các prompt, giúp tốc độ sinh ảnh chỉ mất từ 1–3 giây.
-- 🎯 **Hỗ trợ đầy đủ Model & Tỷ lệ**:
-  - Mô hình: **Nano Banana (Mặc định)**, **Nano Banana Lite**, **Omini Flash**, **Imagen 3.5**, **Pro (GEM_PIX_2)**.
-  - Tỷ lệ: `16:9 Ngang`, `9:16 Dọc`, `1:1 Vuông`, `4:3 Ngang`, `3:4 Dọc`.
-  - Sinh từ **1 đến 4 ảnh** đồng thời cho mỗi prompt.
-- 📦 **Hàng đợi tác vụ FIFO (Task Queue)**: Đóng gói các lô prompt thành từng tác vụ độc lập, cấu hình riêng biệt và thực thi tuần tự tự động.
-- 🎭 **Kho nhân vật & Phân tích Style (OpenMontage)**: Quản lý thư viện nhân vật tham chiếu với cú pháp `@tên_nhân_vật` ngay trong prompt. Trích xuất và lưu trữ phong cách nghệ thuật từ ảnh mẫu.
-- 🏷️ **Tùy biến quy tắc đặt tên file ảnh**: Cấu hình tự động lưu ảnh theo cú pháp chuẩn `{stt}_{prompt_clean}_{count}` với màn hình xem trước thời gian thực.
-- 🌐 **Webhook API cục bộ**: Tích hợp sẵn máy chủ REST API cục bộ để các bot, tác nhân AI hoặc script tự động hóa bên ngoài gửi tác vụ sinh ảnh và nhận kết quả.
-- 🛡️ **Tự động phục hồi lỗi & Chống trôi bộ nhớ**: Tự động nhận diện và tắt Agent Mode, tự đóng dialog chào mừng, tự động làm sạch DOM sau khi hoàn thành.
-
----
-
-## Hướng dẫn chi tiết từng màn hình
-
-### 1. Flow Image — Trình tạo ảnh hàng loạt
-
-![Flow Image](docs/screenshots/01-flow-image.png)
-
-- **Cột bên trái (Sidebar)**:
-  - Chọn Mô hình AI (Nano Banana, Imagen 3.5, Pro...).
-  - Chọn Tỷ lệ khung hình và Số lượng ảnh sinh ra (1–4 ảnh).
-  - Khung nhập prompt: Hỗ trợ dán danh sách hàng trăm prompt (mỗi dòng một prompt) hoặc bấm **"📂 Nạp file (.txt / .xlsx / .csv)"**.
-  - Chọn thư mục lưu ảnh cục bộ trên máy tính.
-  - Bấm **"⚡ CHẠY NGAY"** để bắt đầu sinh ảnh ngay lập tức, hoặc bấm **"+ Add to queue"** để đưa vào hàng đợi.
-- **Bảng danh sách bên phải**:
-  - Hiển thị chi tiết từng prompt: Trạng thái (`⏳ Chờ`, `⚡ Đang chạy`, `✓ Hoàn thành`, `✕ Lỗi`), tiến độ thời gian thực, ảnh thumbnail kết quả và các nút hành động (Xem ảnh, Mở thư mục, Tạo lại).
-
----
-
-### 2. Hàng đợi tác vụ (Task Queue FIFO)
-
-![Task Queue](docs/screenshots/02-task-queue.png)
-
-- Mở hộp thoại Quản lý hàng đợi bằng cách bấm vào nút **"List Queue"** trên thanh công cụ.
-- **Cơ chế FIFO (First-In, First-Out)**:
-  - Cho phép đóng gói nhiều lô prompt khác nhau với từng cấu hình model, tỷ lệ và thư mục lưu riêng.
-  - Bấm **"▶️ Chạy toàn bộ (FIFO)"**: Hệ thống tự động thực thi từng tác vụ tuần tự từ trên xuống dưới, không cần người dùng can thiệp thủ công.
-  - Hỗ trợ chạy từng tác vụ đơn lẻ, tạm dừng hoặc xóa tác vụ khỏi hàng đợi.
-
----
-
-### 3. Kho nhân vật & Phong cách (Character & Style)
-
-![Character & Style](docs/screenshots/03-character-style.png)
-
-- **Tab Nhân vật**:
-  - Lưu trữ các nhân vật tham chiếu với tên nhận diện duy nhất (ví dụ `@kira`, `@ancientman`).
-  - Khi viết prompt, chỉ cần gõ `@tên_nhân_vật`, hệ thống sẽ tự động đính kèm ảnh tham chiếu khuôn mặt/ngoại hình tương ứng vào trình tạo ảnh Google Flow.
-- **Tab Phong cách (Style)**:
-  - Hỗ trợ định nghĩa các phong cách mẫu bằng văn bản mô tả hoặc phân tích trích xuất đặc trưng hình ảnh qua OpenMontage.
-  - Thiết lập Style mặc định để tự động áp dụng vào mọi prompt.
-
----
-
-### 4. Xác thực & Cầu nối Chrome Extension
-
-![Authentication & Extension](docs/screenshots/04-gflow-accounts.png)
-
-- Cung cấp hướng dẫn trực quan 3 bước để cài đặt và kích hoạt Chrome Extension Bridge.
-- Đèn trạng thái thời gian thực:
-  - `🟢 Chrome Extension đã kết nối`: Sẵn sàng nhận lệnh tạo ảnh.
-  - `⚡ Bridge Server`: Đang hoạt động trên cổng nội bộ `127.0.0.1:8765`.
-- Hỗ trợ các nút thao tác nhanh: *Kiểm tra kết nối*, *Đặt lại kết nối*, *Xác thực token*.
-
----
-
-### 5. Cài đặt chung & Quy tắc đặt tên file
-
-![General Settings](docs/screenshots/05-naming-settings.png)
-
-- **Quy tắc đặt tên file ảnh/video xuất ra**:
-  - Tùy chỉnh tiền tố (Prefix), ký tự phân cách (Separator), số chữ số tối thiểu cho số thứ tự (STT) và độ dài rút gọn của prompt.
-  - Khung **Xem trước tên file mẫu** thời gian thực (ví dụ: `1_A_cinematic_portrait_of_kira_in_a_s1.jpg`).
-- **Cấu hình số lần thử lại (Retry)**:
-  - Tự động thử lại khi gặp lỗi gián đoạn mạng hoặc chính sách kiểm duyệt của Google.
-  - Nút **"Khôi phục mặc định"** và **"Khôi phục cài đặt gốc"**.
-
----
-
-### 6. Webhook API Cục bộ
-
-![Webhook API](docs/screenshots/06-webhook-api.png)
-
-- Biến ứng dụng PixelFlow thành một máy chủ tạo ảnh tự động cho các công cụ khác (Python script, Node.js, n8n, Make, Telegram Bot...):
-  - **Khởi chạy / Dừng server**: Kiểm soát trực tiếp từ giao diện.
-  - **Khóa API bí mật (API Key)**: Có nút icon mắt 👁️ để ẩn/hiện key an toàn.
-  - **Endpoints hỗ trợ**:
-    - `POST /api/image/generate`: Gửi yêu cầu sinh ảnh hàng loạt.
-    - `GET /api/status/<job_id>`: Kiểm tra trạng thái và nhận đường dẫn ảnh đã tạo.
-    - `GET /api/credits`: Tra cứu số dư credit còn lại của tài khoản Google Flow.
-
----
-
-### 7. Trạng thái Tài khoản Google Flow & Credits
-
-![Google Flow](docs/screenshots/07-google-flow.png)
-
-- Giám sát trạng thái hoạt động thực tế của tài khoản Google Flow.
-- Hiển thị chính xác số dư credit (ví dụ: `422 / 500 Credits PRO`).
-- Che ký tự email riêng tư (`tu******@gmail.com`) để đảm bảo an toàn khi quay video hoặc chia sẻ màn hình.
-- Các nút tiện ích: 🔄 *Làm mới credit*, 🌐 *Mở trang web Google Flow*, 🗑️ *Xóa tài khoản*.
-
----
-
-## Nơi lưu trữ dữ liệu
-
-| Loại dữ liệu | Đường dẫn trên macOS | Đường dẫn trên Windows |
+| Nền tảng | Phiên bản đề xuất | Gói cài đặt |
 |---|---|---|
-| **Ảnh xuất ra** | `~/Pictures/GoogleFlow_Output` | `%USERPROFILE%\Pictures\GoogleFlow_Output` |
-| **Kho ảnh nhân vật** | `~/Pictures/GoogleFlow_Output/characters` | `%USERPROFILE%\Pictures\GoogleFlow_Output\characters` |
-| **Dữ liệu phiên làm việc** | `~/Pictures/GoogleFlow_Output/sessions` | `%USERPROFILE%\Pictures\GoogleFlow_Output\sessions` |
-| **Cấu hình & Môi trường app** | `~/Library/Application Support/PixelFlow` | `%LOCALAPPDATA%\PixelFlow` |
+| Windows | Windows 10/11 64-bit | `SukiFlow_Setup_v1.0.0.exe` |
+| macOS Apple Silicon | macOS 12 trở lên | `SukiFlow_macOS_v1.0.0_arm64.dmg` |
+
+Gói cài đặt chính thức đã bao gồm các thành phần cần thiết để chạy ứng dụng. Người dùng cuối không cần tự cài Python hoặc FFmpeg.
+
+### Windows
+
+1. Tải **SukiFlow Setup** bằng nút ở đầu trang.
+2. Đóng phiên bản SukiFlow đang chạy trước khi cài hoặc cập nhật.
+3. Mở `SukiFlow_Setup_v1.0.0.exe` và hoàn tất trình cài đặt.
+4. Khởi chạy SukiFlow từ Start Menu hoặc shortcut trên Desktop.
+5. Nếu Windows SmartScreen xuất hiện, chọn **More info** → **Run anyway**. Chỉ tải bộ cài từ trang Releases chính thức này.
+
+### macOS
+
+1. Tải `SukiFlow_macOS_v1.0.0_arm64.dmg`.
+2. Mở file DMG và kéo **SukiFlow.app** vào thư mục **Applications**.
+3. Ở lần mở đầu tiên, bấm chuột phải vào SukiFlow → **Open** → **Open**.
+4. Nếu macOS vẫn chặn ứng dụng, vào **System Settings → Privacy & Security** và chọn **Open Anyway** cho SukiFlow.
+
+Nếu macOS báo ứng dụng bị cách ly và bạn chắc chắn file được tải từ Releases chính thức, có thể chạy:
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/SukiFlow.app"
+```
+
+> Bản macOS hiện phát hành cho máy Apple Silicon (`arm64`). Hãy kiểm tra loại chip tại **Apple menu → About This Mac** trước khi tải.
 
 ---
 
-## Khắc phục sự cố thường gặp (FAQ)
+## Bắt đầu sử dụng
 
-### 1. Trên macOS báo "Ứng dụng bị hỏng / không thể mở"?
-- Đây là cơ chế Gatekeeper của Apple dành cho phần mềm chưa mua chứng chỉ nhà phát triển của Apple.
-- **Cách xử lý**: Mở ứng dụng **Terminal** trên Mac, dán lệnh sau rồi bấm Enter:
-  ```bash
-  xattr -dr com.apple.quarantine "/Applications/PixelFlow.app"
-  ```
-  Sau đó mở lại ứng dụng bình thường.
+1. Mở SukiFlow và chọn **LOGIN GOOGLE** để đăng nhập tài khoản SukiFlow.
+2. Vào **Setting → Linked Accounts**.
+3. Chọn dịch vụ cần dùng rồi bấm **Thêm tài khoản**:
+   - Google Flow
+   - Google Vids
+   - Google Pics
+   - Muse AI
+4. Hoàn tất đăng nhập trong cửa sổ trình duyệt được mở bởi SukiFlow.
+5. Quay lại tab chức năng, nhập prompt và chọn **Chạy ngay**.
 
-### 2. Trên Windows báo "Windows protected your PC" (SmartScreen)?
-- Nhấn vào chữ **More info** (Thông tin khác) → Nhấn nút **Run anyway** (Vẫn chạy). Ứng dụng hoàn toàn an toàn và chạy cục bộ 100% trên máy của bạn.
+> Khi SukiFlow đang tạo ảnh hoặc video qua Google Flow, Google Vids hoặc Google Pics, không đóng cửa sổ trình duyệt tự động được mở. Đây là phiên làm việc mà ứng dụng sử dụng để điều khiển tác vụ và nhận kết quả.
 
-### 3. Google Flow bị đứng hoặc báo lỗi dự án không tồn tại?
-- Phiên bản PixelFlow v2.0 đã tích hợp cơ chế tự động dọn sạch session cũ và tự động khởi tạo dự án mới `PixelFlow Session` trên tài khoản Google của bạn.
-- Bạn chỉ cần đảm bảo đã đăng nhập tài khoản Google Flow hợp lệ trên trình duyệt.
+Nếu chưa có tài khoản phù hợp, SukiFlow sẽ hiển thị hướng dẫn và đưa bạn đến đúng tab Linked Accounts để thêm tài khoản.
 
-### 4. Muốn tắt sạch ứng dụng khi cần cài đè bản mới?
-- **Trên macOS**: Nhấp đúp chuột vào file **`Tat_App_PixelFlow.command`** trong thư mục dự án để dọn sạch toàn bộ tiến trình ngầm chỉ trong 1 giây.
-- **Trên Windows**: Chạy file **`Tat_App_PixelFlow.bat`**.
+---
+
+## Google Flow
+
+### Flow Image
+
+Flow Image hỗ trợ tạo ảnh hàng loạt với các cấu hình hiện có trong SukiFlow:
+
+- Tỷ lệ `16:9`, `9:16`, `1:1`, `4:3`, `3:4`.
+- Model Nano Banana 2, Nano Banana 2 Lite và Nano Banana Pro.
+- Tạo từ 1 đến 4 ảnh cho mỗi prompt.
+- Kích thước đầu ra 1K, 2K hoặc 4K.
+- Chạy tối đa 4 hàng đồng thời, có thời gian chờ giữa các hàng.
+- Nhập prompt trực tiếp hoặc từ TXT, CSV, XLSX.
+- Gắn ảnh nhân vật tự động bằng cú pháp `@TênNhânVật`.
+- Tuỳ chọn xử lý watermark khi môi trường máy hỗ trợ.
+- Chạy mục đã chọn, chạy lại mục lỗi và khôi phục phiên cũ.
+- Chuyển ảnh hoàn thành sang Flow Video hoặc Auto Flow.
+
+![Flow Image](docs/images/flow-image.png)
+
+### Hàng đợi Flow Image
+
+Bạn có thể chọn một hoặc nhiều prompt rồi thêm vào hàng đợi. Mỗi tác vụ giữ cấu hình riêng và được thực thi theo thứ tự. Giới hạn số hàng đồng thời luôn được áp dụng cho cả tác vụ đang chạy và tác vụ chạy lại.
+
+![Hàng đợi Flow Image](docs/images/flow-image-queue.png)
+
+### Flow Video
+
+Flow Video hỗ trợ tạo video từ prompt hoặc ảnh Start/End:
+
+- Tỷ lệ `16:9` và `9:16`.
+- Model Omni 1.1 Flash và các chế độ Veo 3.1 Lite, Fast, Quality.
+- Độ phân giải 360p hoặc 720p.
+- Thời lượng 4–10 giây theo lựa chọn model/tài khoản.
+- Tạo tối đa 4 video cho mỗi prompt.
+- Nối tiếp Start–End frame và nhận ảnh trực tiếp từ Flow Image hoặc Google Pics.
+- Điều chỉnh số luồng, thời gian chờ, thư mục lưu và tuỳ chọn xử lý watermark.
+
+![Flow Video](docs/images/flow-video.png)
+
+---
+
+## Google Pics
+
+Google Pics cung cấp quy trình tạo ảnh hàng loạt độc lập:
+
+- Hỗ trợ các tỷ lệ ảnh phổ biến và xuất ảnh gốc, 2K hoặc 4K.
+- Tạo tối đa 4 ảnh trên mỗi prompt.
+- Nhập prompt từ TXT, CSV hoặc XLSX.
+- Tự động nhận diện nhân vật qua cú pháp `@TênNhânVật`.
+- Chạy theo hàng đợi, chạy lại lỗi, mở lại phiên cũ.
+- Chuyển ảnh đã tạo sang Flow Video hoặc Auto Flow.
+
+![Google Pics](docs/images/google-pics.png)
+
+---
+
+## Google Vids
+
+Google Vids hỗ trợ tạo nội dung theo prompt và ảnh tham chiếu, quản lý kết quả theo từng hàng và chuyển video hoàn thành sang Auto Flow để dựng thành video dài.
+
+- Vids Video và Vids Image trong cùng khu vực làm việc.
+- Tự động gắn nhân vật đã lưu khi prompt chứa `@TênNhânVật`.
+- Hàng đợi, chạy lại lỗi, chạy mục đã chọn và phiên cũ.
+- Tự động lưu kết quả vào thư mục job hoặc thư mục cha đã chọn.
+
+![Google Vids](docs/images/google-vids.png)
+
+---
+
+## Muse AI
+
+Muse AI hỗ trợ tạo video bằng phiên trình duyệt riêng với lựa chọn tỷ lệ, thời lượng, số hàng đồng thời, thời gian chờ và thư mục lưu.
+
+![Muse AI](docs/images/muse-ai.png)
+
+> Muse AI có thể chưa khả dụng ở một số quốc gia hoặc trên một số tài khoản. Việc sử dụng phụ thuộc quyền truy cập do nền tảng Muse cung cấp.
+
+---
+
+## Auto Flow
+
+Auto Flow là khu vực dựng video hoàn chỉnh từ các nguồn media khác nhau.
+
+### Ảnh → Video
+
+- Ghép một thư mục ảnh hoặc ảnh được chuyển từ Flow Image/Google Pics thành video.
+- Thiết lập kỹ xảo chuyển động riêng cho từng cảnh.
+- Tạo voice bằng AI, sử dụng file voice có sẵn hoặc dựng không lời thoại.
+- Đồng bộ timeline, phụ đề, nhạc nền và xuất video hoàn chỉnh.
+- Xem preview mẫu trước khi bắt đầu dựng toàn bộ video.
+
+![Auto Flow Ảnh sang Video](docs/images/autoflow-image-to-video.png)
+
+### Videos → Video
+
+- Ghép nhiều video thành một video dài.
+- Sắp xếp và chỉnh sửa từng phân cảnh.
+- Giữ hoặc tắt âm thanh gốc, thêm voice, nhạc và phụ đề.
+
+![Auto Flow Videos sang Video](docs/images/autoflow-videos-to-video.png)
+
+### Stock Video
+
+- Tạo kịch bản từ chủ đề hoặc sử dụng kịch bản có sẵn.
+- Tìm footage phù hợp trên Pexels và Pixabay.
+- Sắp xếp footage thành phân cảnh, thêm hiệu ứng, voice, nhạc và phụ đề.
+- Có thể chuyển một số cảnh sang video AI bằng Google Flow, Google Vids hoặc Muse AI.
+
+![Auto Flow Stock Video](docs/images/autoflow-stock-video.png)
+
+Để sử dụng Stock Video, cần cấu hình **Pexels API Key** và **Pixabay API Key** trong **Setting → General → Cài đặt API Key**. Một số bước tạo kịch bản, phân tích nội dung hoặc giọng đọc có thể yêu cầu Gemini API Key hoặc AI33 API Key; SukiFlow sẽ hiển thị nút mở đúng phần cài đặt nếu key còn thiếu.
+
+### Draw Video
+
+Draw Video chuyển chủ đề hoặc kịch bản thành chuỗi phân cảnh theo phong cách nét vẽ, kết hợp voice, timing, phụ đề và nhạc để dựng video hoàn chỉnh.
+
+---
+
+## Thư viện Character, Visual, Narrative và Voice
+
+### Character
+
+Lưu một hoặc nhiều ảnh tham chiếu cho nhân vật. Tên được giữ nguyên đúng như bạn nhập và có thể gọi trong prompt bằng cú pháp `@TênNhânVật`.
+
+![Thư viện Character](docs/images/setting-character.png)
+
+### Visual
+
+Lưu các preset phong cách hình ảnh để áp dụng lại cho nhiều dự án và prompt.
+
+![Thư viện Visual](docs/images/setting-visual.png)
+
+### Narrative
+
+Lưu phong cách kể chuyện, cấu trúc nội dung và chỉ dẫn giọng văn cho Auto Flow.
+
+![Thư viện Narrative](docs/images/setting-narrative.png)
+
+### Voice
+
+Quản lý các preset giọng đọc, voice ID và cấu hình tốc độ để tái sử dụng trong quá trình dựng video.
+
+![Thư viện Voice](docs/images/setting-voice.png)
+
+---
+
+## Dữ liệu và quyền riêng tư
+
+- SukiFlow là ứng dụng desktop; file ảnh, video và dữ liệu dự án được lưu trên máy theo thư mục bạn chọn.
+- Phiên đăng nhập của từng nền tảng được lưu trong vùng dữ liệu ứng dụng để không phải đăng nhập lại mỗi lần mở app.
+- Đăng xuất thiết bị trong SukiFlow không đồng nghĩa với việc xóa toàn bộ Linked Accounts; bạn có thể quản lý hoặc xóa từng tài khoản trong **Setting → Linked Accounts**.
+- Không chia sẻ API Key, cookie, profile trình duyệt hoặc thư mục dữ liệu ứng dụng cho người khác.
+- SukiFlow dùng trình duyệt để làm việc với các nền tảng bên thứ ba. Bạn chịu trách nhiệm tuân thủ điều khoản và chính sách của các nền tảng tương ứng.
+
+### Thư mục đầu ra mặc định
+
+Các module có thể dùng thư mục mặc định sau nếu bạn không chọn thư mục khác:
+
+| Module | Thư mục thường dùng |
+|---|---|
+| Google Flow Image/Video | `Pictures/GoogleFlow_Output` |
+| Google Pics | `Pictures/GooglePics_Output` |
+| Auto Flow | `Pictures/AutoFlow_Output` |
+
+---
+
+## Khắc phục sự cố
+
+### Trạng thái kết nối không chuyển sang hoạt động
+
+- Khi chưa có tác vụ, SukiFlow có thể không hiển thị nhãn trạng thái.
+- Khi bắt đầu worker, trạng thái chuyển thành **Kết nối ...**.
+- Khi worker sẵn sàng, trạng thái hiển thị số kết nối đang hoạt động.
+- Không đóng cửa sổ trình duyệt mà SukiFlow mở trong lúc tác vụ đang chạy.
+
+### Chưa có Linked Account
+
+Vào **Setting → Linked Accounts**, chọn đúng dịch vụ rồi thêm tài khoản. Tài khoản Google Flow không tự thay thế cho Google Vids, Google Pics hoặc Muse AI.
+
+### Cài đè trên Windows báo “Access is denied”
+
+Đóng hoàn toàn SukiFlow và các cửa sổ trình duyệt/terminal liên quan, sau đó chạy lại installer. Không chọn **Skip this file**, vì có thể tạo bản cài thiếu file.
+
+### Tác vụ tạo ảnh hoặc video phản hồi chậm
+
+- Kiểm tra trình duyệt tự động còn mở và tài khoản còn đăng nhập.
+- Kiểm tra hạn mức/credit và cảnh báo của nền tảng.
+- Giảm số hàng chạy đồng thời xuống 1 để kiểm tra.
+- Thử chạy lại một prompt ngắn, không có ảnh tham chiếu.
+- Mở **Setting → Logs** và lưu lại log trước khi yêu cầu hỗ trợ.
+
+### Xử lý watermark bị chậm hoặc không hoàn tất
+
+Tính năng này cần model đi kèm và tài nguyên xử lý cục bộ. Hãy thử tắt lựa chọn xử lý watermark để xác nhận luồng tạo ảnh/video chính vẫn hoạt động. Hiệu năng có thể khác nhau theo kiến trúc CPU và cấu hình máy.
+
+### Muse AI không hoạt động
+
+Muse AI có thể giới hạn theo tài khoản hoặc khu vực. Đây không nhất thiết là lỗi cài đặt của SukiFlow.
+
+---
+
+## Cập nhật
+
+SukiFlow kiểm tra chính sách phiên bản khi khởi động. Khi có bản cập nhật bắt buộc, ứng dụng sẽ hiển thị thông báo và đường dẫn tải phiên bản mới.
+
+Luôn tải bản chính thức tại:
+
+**[GitHub Releases — SukiFlow](https://github.com/sukiflow-ai/downloads/releases/latest)**
+
+---
+
+## Lưu ý
+
+SukiFlow là công cụ hỗ trợ tự động hoá quy trình. SukiFlow không thuộc, không được tài trợ và không được xác nhận bởi Google, Meta, Pexels, Pixabay hoặc các nền tảng bên thứ ba được nhắc đến. Tên thương hiệu thuộc về chủ sở hữu tương ứng.
+
+<p align="center">
+  <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="72"><br>
+  <strong>SukiFlow 1.0.0</strong><br>
+  © 2026 SukiFlow
+</p>
