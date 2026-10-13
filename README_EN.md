@@ -11,21 +11,18 @@
 <table align="center">
   <tr>
     <td align="center" width="260">
-      <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="54"><br>
       <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D4?style=flat-square&logo=windows11&logoColor=white" alt="Windows 10/11"><br>
       <strong>SukiFlow for Windows</strong><br>
       <sub>64-bit · EXE installer</sub><br><br>
-      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.0.0/SukiFlow_Setup_v1.0.0.exe"><img src="https://img.shields.io/badge/DOWNLOAD_WINDOWS-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Download SukiFlow for Windows"></a>
+      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.0.0/SukiFlow_Setup_v1.0.0.exe"><img src="https://img.shields.io/badge/DOWNLOAD_INSTALLER-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Download SukiFlow installer for Windows"></a>
     </td>
     <td align="center" width="260">
-      <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="54"><br>
       <img src="https://img.shields.io/badge/macOS-Apple%20Silicon-10B981?style=flat-square&logo=apple&logoColor=white" alt="macOS Apple Silicon"><br>
       <strong>SukiFlow for Mac</strong><br>
       <sub>M1 · M2 · M3 · M4</sub><br><br>
-      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.0.0/SukiFlow_macOS_v1.0.0_arm64.dmg"><img src="https://img.shields.io/badge/DOWNLOAD_APPLE_SILICON-10B981?style=for-the-badge&logo=apple&logoColor=white" alt="Download SukiFlow for Apple Silicon"></a>
+      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.0.0/SukiFlow_macOS_v1.0.0_arm64.dmg"><img src="https://img.shields.io/badge/DOWNLOAD_INSTALLER-10B981?style=for-the-badge&logo=apple&logoColor=white" alt="Download SukiFlow installer for Apple Silicon"></a>
     </td>
     <td align="center" width="260">
-      <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="54"><br>
       <img src="https://img.shields.io/badge/macOS-Intel-5B5BD6?style=flat-square&logo=intel&logoColor=white" alt="macOS Intel"><br>
       <strong>SukiFlow for Mac</strong><br>
       <sub>Intel · x86_64</sub><br><br>
