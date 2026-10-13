@@ -8,11 +8,31 @@
   <strong>Giải pháp tự động hoá tạo ảnh &amp; video AI hàng loạt tối ưu trên các nền tảng.</strong>
 </p>
 
-<p align="center">
-  <a href="https://github.com/suki-app/sukiflow-doc/releases/latest/download/SukiFlow_Setup_v1.0.0.exe"><img alt="Tải SukiFlow cho Windows" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"></a>
-  &nbsp;
-  <a href="https://github.com/suki-app/sukiflow-doc/releases/latest/download/SukiFlow_macOS_v1.0.0_arm64.dmg"><img alt="Tải SukiFlow cho macOS" src="https://img.shields.io/badge/T%E1%BA%A3i%20SukiFlow-macOS-111111?style=for-the-badge&logo=apple&logoColor=white"></a>
-</p>
+<table align="center">
+  <tr>
+    <td align="center" width="260">
+      <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="54"><br>
+      <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D4?style=flat-square&logo=windows11&logoColor=white" alt="Windows 10/11"><br>
+      <strong>SukiFlow cho Windows</strong><br>
+      <sub>64-bit · Bộ cài đặt EXE</sub><br><br>
+      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.0.0/SukiFlow_Setup_v1.0.0.exe"><img src="https://img.shields.io/badge/TẢI_BẢN_WINDOWS-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Tải SukiFlow cho Windows"></a>
+    </td>
+    <td align="center" width="260">
+      <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="54"><br>
+      <img src="https://img.shields.io/badge/macOS-Apple%20Silicon-10B981?style=flat-square&logo=apple&logoColor=white" alt="macOS Apple Silicon"><br>
+      <strong>SukiFlow cho Mac</strong><br>
+      <sub>M1 · M2 · M3 · M4</sub><br><br>
+      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.0.0/SukiFlow_macOS_v1.0.0_arm64.dmg"><img src="https://img.shields.io/badge/TẢI_APPLE_SILICON-10B981?style=for-the-badge&logo=apple&logoColor=white" alt="Tải SukiFlow cho Apple Silicon"></a>
+    </td>
+    <td align="center" width="260">
+      <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="54"><br>
+      <img src="https://img.shields.io/badge/macOS-Intel-5B5BD6?style=flat-square&logo=intel&logoColor=white" alt="macOS Intel"><br>
+      <strong>SukiFlow cho Mac</strong><br>
+      <sub>Intel · x86_64</sub><br><br>
+      <img src="https://img.shields.io/badge/BẢN_DEMO-SẮP_PHÁT_HÀNH-6B7280?style=for-the-badge&logo=intel&logoColor=white" alt="Bản Intel sắp phát hành">
+    </td>
+  </tr>
+</table>
 
 <p align="center">
   <a href="README_EN.md">English</a>
@@ -68,6 +88,7 @@ Các nhóm chức năng chính:
 |---|---|---|
 | Windows | Windows 10/11 64-bit | `SukiFlow_Setup_v1.0.0.exe` |
 | macOS Apple Silicon | macOS 12 trở lên | `SukiFlow_macOS_v1.0.0_arm64.dmg` |
+| macOS Intel | Đang hoàn thiện bản demo | Sắp phát hành |
 
 Gói cài đặt chính thức đã bao gồm các thành phần cần thiết để chạy ứng dụng. Người dùng cuối không cần tự cài Python hoặc FFmpeg.
 
