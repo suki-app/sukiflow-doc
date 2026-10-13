@@ -230,6 +230,14 @@ Stock Video requires both a **Pexels API Key** and a **Pixabay API Key** under *
 
 Draw Video turns a topic or script into illustrated storyboard scenes and combines voice, timing, subtitles, and music into a complete video.
 
+![Auto Flow Draw Video](docs/images/autoflow-draw-video.png)
+
+### Jetflag Video
+
+Jetflag Video is designed to transform a source video into localized versions for different languages and markets. This feature is currently under development.
+
+![Auto Flow Jetflag Video](docs/images/autoflow-jetflag-video.png)
+
 ---
 
 ## Character, Visual, Narrative, and Voice libraries

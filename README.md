@@ -230,6 +230,14 @@ Auto Flow là khu vực dựng video hoàn chỉnh từ các nguồn media khác
 
 Draw Video chuyển chủ đề hoặc kịch bản thành chuỗi phân cảnh theo phong cách nét vẽ, kết hợp voice, timing, phụ đề và nhạc để dựng video hoàn chỉnh.
 
+![Auto Flow Draw Video](docs/images/autoflow-draw-video.png)
+
+### Jetflag Video
+
+Jetflag Video được định hướng để chuyển một video gốc thành các phiên bản phù hợp với nhiều ngôn ngữ và thị trường khác nhau. Chức năng hiện đang được phát triển.
+
+![Auto Flow Jetflag Video](docs/images/autoflow-jetflag-video.png)
+
 ---
 
 ## Thư viện Character, Visual, Narrative và Voice
