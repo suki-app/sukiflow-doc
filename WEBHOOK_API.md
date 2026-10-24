@@ -137,23 +137,23 @@ POST /api/image/generate
 }
 ```
 
-| Field | Bắt buộc | Giá trị / mặc định |
-|---|---:|---|
-| `type` | Không | `google_flow` |
-| `prompt` | Có | Tối đa 10.000 ký tự |
-| `model` | Không | `nano_banana_2`, `nano_banana_2_lite`, `nano_banana_pro`; mặc định `nano_banana_2` |
-| `aspect_ratio` | Không | `16:9`, `9:16`, `1:1`, `4:3`, `3:4`; mặc định `16:9` |
-| `image_size` | Không | `1K (Tiêu chuẩn)`, `2K (Sắc nét)`, `4K (Siêu nét)`; mặc định 1K |
-| `count` | Không | Số ảnh `1–4`; mặc định `1` |
-| `style_prompt` | Không | Chuỗi tối đa 2.000 ký tự |
-| `delay` | Không | `0`, `5`, `10`, `15`, `30` giây; mặc định `5` |
-| `auto_assign` | Không | Boolean; mặc định `true` |
-| `clean_watermark` | Không | Boolean; mặc định `true` |
-| `reference_images` | Không | Danh sách ảnh tham chiếu; tối đa 10 ảnh, tổng tối đa 7 MB |
-| `model_fallback` | Không | Cấu hình model dự phòng, xem bên dưới |
-| `save_mode` | Không | `job` hoặc `direct`; mặc định `job` |
-| `base_folder` | Không | Thư mục đầu ra tùy chọn; cần có quyền ghi |
-| `batch_id`, `batch_size`, `parallel` | Không | Gom nhiều prompt thành batch; xem [Gom nhiều prompt](#8-gom-nhiều-prompt-thành-batch) |
+| Field | Bắt buộc | Giá trị / mặc định | Mô tả |
+|---|---:|---|---|
+| `type` | Không | `google_flow` | Chọn dịch vụ xử lý yêu cầu; nếu bỏ qua, server dùng Google Flow. |
+| `prompt` | Có | Tối đa 10.000 ký tự | Nội dung mô tả hình ảnh cần tạo hoặc chỉnh sửa. |
+| `model` | Không | `nano_banana_2`, `nano_banana_2_lite`, `nano_banana_pro`; mặc định `nano_banana_2` | Chọn model tạo ảnh của Google Flow. |
+| `aspect_ratio` | Không | `16:9`, `9:16`, `1:1`, `4:3`, `3:4`; mặc định `16:9` | Tỉ lệ khung hình của ảnh đầu ra. |
+| `image_size` | Không | `1K (Tiêu chuẩn)`, `2K (Sắc nét)`, `4K (Siêu nét)`; mặc định 1K | Mức độ phân giải/kích thước ảnh đầu ra. |
+| `count` | Không | Số ảnh `1–4`; mặc định `1` | Số ảnh yêu cầu tạo cho prompt này. |
+| `style_prompt` | Không | Chuỗi tối đa 2.000 ký tự | Chỉ dẫn bổ sung về phong cách hoặc cách thể hiện hình ảnh. |
+| `delay` | Không | `0`, `5`, `10`, `15`, `30` giây; mặc định `5` | Thời gian chờ giữa các tác vụ trong lượt xử lý. |
+| `auto_assign` | Không | Boolean; mặc định `true` | Cho phép worker tự chọn tài khoản Google Flow khả dụng. |
+| `clean_watermark` | Không | Boolean; mặc định `true` | Bật hoặc tắt bước xử lý làm sạch watermark sau khi tạo ảnh. |
+| `reference_images` | Không | Danh sách ảnh tham chiếu; tối đa 10 ảnh, tổng tối đa 7 MB | Ảnh đầu vào để hướng dẫn hoặc làm cơ sở chỉnh sửa; có ảnh thì worker xử lý theo Image → Image. |
+| `model_fallback` | Không | Cấu hình model dự phòng, xem bên dưới | Quy định có chuyển sang model khác khi model chính không dùng được hay không. |
+| `save_mode` | Không | `job` hoặc `direct`; mặc định `job` | Chọn cách tổ chức lưu file kết quả: theo thư mục lượt chạy (`job`) hoặc trực tiếp (`direct`). |
+| `base_folder` | Không | Thư mục đầu ra tùy chọn; cần có quyền ghi | Thư mục gốc để lưu file; nếu không truyền, dùng thư mục đầu ra cấu hình trong SukiFlow. |
+| `batch_id`, `batch_size`, `parallel` | Không | Gom nhiều prompt thành batch; xem [Gom nhiều prompt](#8-gom-nhiều-prompt-thành-batch) | Các field phối hợp nhiều request Flow thành một batch và đặt số lượng task chạy đồng thời. |
 
 Image → Image được xác định bằng `reference_images`: không có ảnh tham chiếu thì là Text → Image; có ảnh tham chiếu thì worker gửi ảnh cùng prompt. **Không truyền field `mode` cho Google Flow Image.**
 
