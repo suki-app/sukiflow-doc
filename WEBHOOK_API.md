@@ -259,7 +259,7 @@ Text → Video:
   "prompt": "A red fox running through fresh snow at sunrise, cinematic wide shot",
   "model": "omni_flash",
   "aspect_ratio": "16:9",
-  "video_length": 4,
+  "video_length": 8,
   "resolution": "360p",
   "count": 1,
   "save_mode": "job"
@@ -275,7 +275,7 @@ Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
   "prompt": "The fox walks from the snowy forest into a sunlit meadow",
   "model": "omni_flash",
   "aspect_ratio": "9:16",
-  "video_length": 4,
+  "video_length": 8,
   "resolution": "360p",
   "start_image": {
     "filename": "start.png",
