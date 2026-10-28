@@ -29,7 +29,7 @@ Webhook API cho phép script, ứng dụng nội bộ và dịch vụ tự độ
 Địa chỉ mặc định:
 
 ```text
-http://127.0.0.1:8766
+http://127.0.0.1:10790
 ```
 
 Port có thể cấu hình trong khoảng `1024–65535`. Máy chạy SukiFlow phải có Linked Account đã đăng nhập cho đúng provider.
@@ -106,7 +106,7 @@ Task và mã file được giữ trong bộ nhớ của tiến trình SukiFlow. 
 Ví dụ health check:
 
 ```bash
-curl http://127.0.0.1:8766/api/health
+curl http://127.0.0.1:10790/api/health
 ```
 
 ## 5. Tạo ảnh
@@ -259,9 +259,10 @@ Text → Video:
   "prompt": "A red fox running through fresh snow at sunrise, cinematic wide shot",
   "model": "omni_flash",
   "aspect_ratio": "16:9",
-  "video_length": 8,
+  "video_length": 4,
   "resolution": "360p",
   "count": 1,
+  "fallback_service": "google_vids",
   "save_mode": "job"
 }
 ```
@@ -275,7 +276,7 @@ Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
   "prompt": "The fox walks from the snowy forest into a sunlit meadow",
   "model": "omni_flash",
   "aspect_ratio": "9:16",
-  "video_length": 8,
+  "video_length": 4,
   "resolution": "360p",
   "start_image": {
     "filename": "start.png",
@@ -298,6 +299,10 @@ Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
 - Ảnh gửi theo cấu trúc `{ "filename": "...png", "data": "data:image/png;base64,..." }`. Hỗ trợ PNG, JPEG, WebP; tổng kích thước ảnh đầu/cuối tối đa 7 MB.
 - `clean_watermark`: boolean; mặc định `false`.
 - `save_mode`: `job` hoặc `direct`; `base_folder` tùy chọn.
+- `fallback_service`: mặc định `google_vids`; đặt `none` để tắt dự phòng sang Google Vids.
+- Flow thử các tài khoản khả dụng trước. Khi tất cả tài khoản Flow từ chối vì quota/giới hạn, hoặc lỗi khởi tạo project trước bước gửi tạo vẫn còn sau 3 lần thử, task có thể được chuyển sang Google Vids. Timeout không rõ xảy ra trước hay sau khi Flow nhận lệnh tạo không tự gửi lại để tránh tạo trùng.
+- Google Vids không hỗ trợ `360p`; khi fallback từ Flow `360p`, độ phân giải được nâng lên `720p`. Fallback hiện chỉ áp dụng cho `count=1`.
+- Khi fallback, task vẫn giữ cùng `task_id`; trường `provider_fallback` trong status cho biết dịch vụ đích, lý do và độ phân giải đã dùng.
 
 ### Google Vids Video
 
@@ -384,7 +389,7 @@ def reference_image(path):
 
 ## 8. Gom nhiều prompt thành batch
 
-Google Flow Image và Google Flow Video cho phép các request riêng ghép vào cùng một batch bằng `batch_id`. Gửi từng prompt thành một request độc lập; giữ nguyên `batch_id`, `batch_size`, `parallel` và các setting chung cho mọi request thuộc batch.
+Google Flow Image và Google Flow Video cho phép các request riêng ghép vào cùng một batch bằng `batch_id`. Gửi từng prompt thành một request độc lập; giữ nguyên `batch_id`, `batch_size`, `parallel` và các setting chung cho mọi request thuộc batch. Worker nhận toàn bộ batch rồi duy trì cửa sổ chạy liên tục: khi một prompt xong, prompt đang chờ tiếp theo sẽ tự bắt đầu nếu còn slot, không cần chờ cả nhóm hiện tại hoàn tất.
 
 Ví dụ phần field thêm vào từng request:
 
@@ -396,12 +401,12 @@ Ví dụ phần field thêm vào từng request:
 }
 ```
 
-- `batch_id`: chuỗi 8–80 ký tự, bắt buộc nếu batch có từ 2 task.
-- `batch_size`: số task dự kiến trong batch, `2–4`.
-- `parallel`: số task chạy đồng thời, `1–4`, không lớn hơn `batch_size`.
+- `batch_id`: ID dùng chung để ghép các request. Với Flow Video phải dài 8–80 ký tự; với Flow Image là chuỗi tối đa 100 ký tự. Bắt buộc khi `batch_size` lớn hơn 1.
+- `batch_size`: tổng số prompt dự kiến trong batch, `2–100` (tối đa 100 task đang chờ/chạy trên server).
+- `parallel`: số prompt tối đa được chạy đồng thời, `1–4`, không lớn hơn `batch_size`. Với Image, mặc định là `min(batch_size, 4)`; với Video, cần truyền field này.
 - Với Flow Image, các request trong batch phải dùng chung `base_folder`, `save_mode`, `model_fallback`, `batch_size`, `parallel`.
 - Với Flow Video, các request trong batch phải dùng chung cấu hình video và `batch_size`, `parallel`.
-- Nếu không gửi đủ request, server tự flush batch sau khoảng 15 giây (Image) hoặc 20 giây (Video).
+- Nếu không gửi đủ request, server tự flush các prompt đã nhận sau 120 giây (Image và Video). Các prompt gửi sau thời điểm flush cần dùng `batch_id` mới.
 
 Không dùng batch nếu chỉ tạo một prompt; khi đó bỏ `batch_id`, `batch_size`, `parallel`.
 
@@ -423,19 +428,25 @@ Task có thể được nhận `202` nhưng thất bại ở bước worker/prov
 
 Giới hạn runtime hiện tại: tối đa 100 task đang `pending`/`running`; danh sách `/api/tasks` trả tối đa 50 task gần nhất.
 
+### Chuyển tài khoản khi gặp lỗi quota
+
+Worker có thể thử Linked Account khả dụng tiếp theo khi nhận diện được lỗi gắn với tài khoản, như hết quota/lượt hoặc lỗi xác thực/quyền. Tài khoản đang tắt, hết hạn hoặc bị đánh dấu tạm giới hạn sẽ bị bỏ qua khi lập danh sách tài khoản chạy.
+
+Failover là best effort: lỗi giao diện, selector, kết nối hoặc timeout không nhất thiết được phân loại là lỗi tài khoản, nên không đảm bảo sẽ chuyển tài khoản trong mọi trường hợp. Nếu task thất bại, xem `error` trong trạng thái task và log Webhook trong app. Trước khi gửi lại yêu cầu tạo mới, hãy kiểm tra task cũ vì provider có thể đã nhận yêu cầu dù client chưa nhận được kết quả.
+
 ## 10. Bảo mật khi truy cập từ LAN hoặc Internet
 
 ### Ứng dụng cùng máy
 
-Dùng `http://127.0.0.1:8766`. Đây là lựa chọn phù hợp cho script và ứng dụng local.
+Dùng `http://127.0.0.1:10790`. Đây là lựa chọn phù hợp cho script và ứng dụng local.
 
 ### Thiết bị trong cùng LAN
 
-Trong cài đặt Webhook API, bind server vào `0.0.0.0`, sau đó gọi địa chỉ LAN của máy chạy SukiFlow, ví dụ `http://192.168.1.20:8766`. Chỉ bật trên mạng tin cậy và vẫn phải gửi `X-API-Key`.
+Trong cài đặt Webhook API, bind server vào `0.0.0.0`, sau đó gọi địa chỉ LAN của máy chạy SukiFlow, ví dụ `http://192.168.1.20:10790`. Chỉ bật trên mạng tin cậy và vẫn phải gửi `X-API-Key`.
 
 ### Ứng dụng/web chạy trên Internet
 
-`127.0.0.1` trên trình duyệt online là máy của người truy cập, không phải máy chạy SukiFlow. Muốn kết nối tới SukiFlow local, máy đó cần có đường kết nối tới server, ví dụ VPN hoặc tunnel HTTPS được cấu hình tới `127.0.0.1:8766`.
+`127.0.0.1` trên trình duyệt online là máy của người truy cập, không phải máy chạy SukiFlow. Muốn kết nối tới SukiFlow local, máy đó cần có đường kết nối tới server, ví dụ VPN hoặc tunnel HTTPS được cấu hình tới `127.0.0.1:10790`.
 
 Không mở cổng HTTP của Webhook API trực tiếp ra Internet. Tunnel chỉ tạo đường mạng; nó không thay thế việc xác thực và bảo vệ API. CORS hiện cho phép request từ browser, vì vậy:
 
@@ -449,7 +460,7 @@ Không mở cổng HTTP của Webhook API trực tiếp ra Internet. Tunnel ch�
 Đặt base URL và API key trong biến môi trường để tránh ghi key vào source code:
 
 ```bash
-export SUKIFLOW_URL="http://127.0.0.1:8766"
+export SUKIFLOW_URL="http://127.0.0.1:10790"
 export SUKIFLOW_API_KEY="YOUR_SUKIFLOW_API_KEY"
 ```
 
