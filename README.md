@@ -58,7 +58,7 @@ Các nhóm chức năng chính:
 - **Google Pics:** Tạo ảnh hàng loạt chất lượng cao, xuất ảnh gốc, 2K hoặc 4K, hỗ trợ ảnh tham chiếu và nhận diện nhân vật tự động.
 - **ChatGPT Image:** Tạo ảnh qua ChatGPT với cả 2 chế độ Văn bản → Ảnh (Text-to-Image) và Ảnh → Ảnh (Image-to-Image, tối đa 5 ảnh tham chiếu), tuỳ chỉnh độ nét và phong cách.
 - **Muse AI:** Hỗ trợ cả tạo video (16:9, 9:16, 5–10s, MP4/WebM/MOV) và tạo ảnh với tối đa 5 ảnh tham chiếu.
-- **Auto Flow (Video Builder):** Dựng video hoàn chỉnh từ ảnh, ghép video dài, dựng Stock Video từ kịch bản, Draw Video và Jetflag Video.
+- **Auto Flow (Video Builder):** Dựng video hoàn chỉnh từ ảnh, ghép video dài, dựng Stock Video từ kịch bản, Draw Video và Jetlag Video.
 - **Linked Accounts:** Quản lý độc lập và tự động luân phiên tài khoản Google Flow, Google Vids, Google Pics và Muse AI.
 - **Thư viện sáng tạo:** Lưu trữ Character, Visual, Narrative và Voice preset để tái sử dụng xuyên suốt các dự án.
 - **Máy chủ Webhook API &amp; Test Playground:** Tích hợp máy chủ REST Webhook API độc lập ngay trong ứng dụng (port 10790) kết hợp trang playground `/webhook-test` để tích hợp với n8n, Make, Zapier và các hệ thống backend.
@@ -290,11 +290,11 @@ Auto Flow là xưởng dựng video hoàn chỉnh, kết hợp các tài nguyên
 
 ![Auto Flow Draw Video](docs/images/autoflow-draw-video.png)
 
-### 5. Jetflag Video
+### 5. Jetlag Video
 
 - Module chuyển đổi video gốc sang các phiên bản đa ngôn ngữ cho thị trường quốc tế (đang hoàn thiện).
 
-![Auto Flow Jetflag Video](docs/images/autoflow-jetflag-video.png)
+![Auto Flow Jetlag Video](docs/images/autoflow-jetlag-video.png)
 
 ---
 

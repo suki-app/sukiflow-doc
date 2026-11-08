@@ -58,7 +58,7 @@ Main capabilities include:
 - **Google Pics:** High-resolution batch image generation with original, 2K, or 4K export, character auto-assignment, and reference images.
 - **ChatGPT Image:** Generate images via ChatGPT supporting both Text-to-Image and Image-to-Image modes (up to 5 reference images), quality presets, and custom style prompts.
 - **Muse AI:** Browser-assisted video creation (16:9, 9:16, 5–10s, MP4/WebM/MOV) and image generation with up to 5 reference images.
-- **Auto Flow (Video Builder):** Build complete videos from images, merge video clips, generate Stock Video from script, Draw Video, and Jetflag Video.
+- **Auto Flow (Video Builder):** Build complete videos from images, merge video clips, generate Stock Video from script, Draw Video, and Jetlag Video.
 - **Linked Accounts:** Independently manage and auto-rotate Google Flow, Google Vids, Google Pics, and Muse AI sessions.
 - **Creative Libraries:** Save and reuse Character, Visual, Narrative, and Voice presets across workflows.
 - **Built-in Webhook API &amp; Test Playground:** Independent REST Webhook API server (port 10790) coupled with an interactive `/webhook-test` playground for n8n, Make, Zapier, Python, and backend automations.
@@ -289,11 +289,11 @@ Auto Flow is a full-featured video production studio that combines images, video
 
 ![Auto Flow Draw Video](docs/images/autoflow-draw-video.png)
 
-### 5. Jetflag Video
+### 5. Jetlag Video
 
 - Video localization pipeline for multi-language and international content adaptation (in active development).
 
-![Auto Flow Jetflag Video](docs/images/autoflow-jetflag-video.png)
+![Auto Flow Jetlag Video](docs/images/autoflow-jetlag-video.png)
 
 ---
 
