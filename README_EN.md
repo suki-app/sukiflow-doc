@@ -38,27 +38,31 @@
   ·
   <a href="#installation">Installation</a>
   ·
+  <a href="WEBHOOK_API.md">Webhook API Documentation</a>
+  ·
   <a href="#troubleshooting">Troubleshooting</a>
 </p>
 
-> Current version: **SukiFlow 1.0.0**. SukiFlow is a desktop application for Windows and macOS. Features that depend on third-party services may vary by account, region, quota, availability, and each platform's policies.
+> Current version: **SukiFlow 1.2.0**. SukiFlow is a desktop application for Windows and macOS. Features that depend on third-party services may vary by account, region, quota, availability, and each platform's policies.
 
 ---
 
 ## Overview
 
-SukiFlow brings multiple AI image and video workflows into one desktop application. It supports batch prompts, multiple linked accounts, task queues, saved sessions, reusable creative presets, and direct transfer of results between tools.
+SukiFlow brings multiple cutting-edge AI image and video workflows into one desktop application. It supports batch prompts, multiple linked accounts, concurrent task queues, saved sessions, reusable creative presets, direct transfer of results between tools without manual file management, and programmatic integration via a built-in REST Webhook API server.
 
 Main capabilities include:
 
-- **Google Flow:** batch image and video generation through Flow Image and Flow Video.
-- **Google Pics:** batch image generation with references and direct transfer to Flow Video or Auto Flow.
-- **Google Vids:** image and video generation, queue management, and transfer to Auto Flow.
-- **Muse AI:** browser-assisted video generation, subject to account and regional availability.
-- **Auto Flow:** build complete videos from images, multiple video clips, stock footage, or Draw Video storyboards.
-- **Linked Accounts:** manage Google Flow, Google Vids, Google Pics, and Muse AI sessions separately.
-- **Creative libraries:** save and reuse Character, Visual, Narrative, and Voice presets.
-- **Task management:** run immediately, run selected rows, retry failures, use FIFO queues, and restore previous sessions.
+- **Google Flow:** Batch image and video generation through Flow Image (Nano Banana 2/Pro, 1K/2K/4K, 4-column preview grid) and Flow Video (Omni Flash 360p/720p, Veo 3.1, Frames mode &amp; Reference image Ingredients mode, automatic fallback to Google Vids).
+- **Google Vids:** Create videos (3–15s, 16:9/9:16/1:1, up to 3 reference images) and generate Vids Images across rich style presets.
+- **Google Pics:** High-resolution batch image generation with original, 2K, or 4K export, character auto-assignment, and reference images.
+- **ChatGPT Image:** Generate images via ChatGPT supporting both Text-to-Image and Image-to-Image modes (up to 5 reference images), quality presets, and custom style prompts.
+- **Muse AI:** Browser-assisted video creation (16:9, 9:16, 5–10s, MP4/WebM/MOV) and image generation with up to 5 reference images.
+- **Auto Flow (Video Builder):** Build complete videos from images, merge video clips, generate Stock Video from script, Draw Video, and Jetflag Video.
+- **Linked Accounts:** Independently manage and auto-rotate Google Flow, Google Vids, Google Pics, and Muse AI sessions.
+- **Creative Libraries:** Save and reuse Character, Visual, Narrative, and Voice presets across workflows.
+- **Built-in Webhook API &amp; Test Playground:** Independent REST Webhook API server (port 10790) coupled with an interactive `/webhook-test` playground for n8n, Make, Zapier, Python, and backend automations.
+- **Smart Task Management:** Run immediately, run selected rows, retry failures, FIFO queue scheduling, backoff protection, and previous session restoration.
 
 ![SukiFlow Flow Image interface](docs/images/flow-image.png)
 
@@ -67,11 +71,13 @@ Main capabilities include:
 - [Installation](#installation)
 - [Getting started](#getting-started)
 - [Google Flow](#google-flow)
-- [Google Pics](#google-pics)
 - [Google Vids](#google-vids)
+- [Google Pics](#google-pics)
+- [ChatGPT Image](#chatgpt-image)
 - [Muse AI](#muse-ai)
-- [Auto Flow](#auto-flow)
-- [Character, Visual, Narrative, and Voice libraries](#character-visual-narrative-and-voice-libraries)
+- [Auto Flow (Video Builder)](#auto-flow-video-builder)
+- [Creative Libraries](#creative-libraries-character-visual-narrative-and-voice)
+- [Webhook API Server](#webhook-api-server)
 - [Data and privacy](#data-and-privacy)
 - [Troubleshooting](#troubleshooting)
 
@@ -83,52 +89,54 @@ Main capabilities include:
 
 | Platform | Recommended version | Installer |
 |---|---|---|
-| Windows | Windows 10/11 64-bit | `SukiFlow_Setup_v1.0.0.exe` |
-| macOS Apple Silicon | macOS 12 or later | `SukiFlow_macOS_v1.0.0_arm64.dmg` |
+| Windows | Windows 10/11 64-bit | `SukiFlow_Setup_v1.2.0.exe` |
+| macOS Apple Silicon | macOS 12 or later | `SukiFlow_macOS_v1.2.0_arm64.dmg` |
 | macOS Intel | Demo build in progress | Coming soon |
 
-Official installers include the runtime components required by the application. End users do not need to install Python or FFmpeg separately.
+Official installers include all required runtime components. End users do not need to install Python or FFmpeg separately.
 
 ### Windows
 
 1. Download **SukiFlow Setup** using the button at the top of this page.
 2. Close any running SukiFlow instance before installing or updating.
-3. Open `SukiFlow_Setup_v1.0.0.exe` and complete the installation.
-4. Launch SukiFlow from the Start Menu or the Desktop shortcut.
+3. Open `SukiFlow_Setup_v1.2.0.exe` and complete the installation.
+4. Launch SukiFlow from the Start Menu or Desktop shortcut.
 5. If Windows SmartScreen appears, select **More info** → **Run anyway**. Only install packages downloaded from this official Releases page.
 
 ### macOS
 
-1. Download `SukiFlow_macOS_v1.0.0_arm64.dmg`.
-2. Open the DMG and drag **SukiFlow.app** into **Applications**.
-3. On first launch, right-click SukiFlow and choose **Open** → **Open**.
-4. If macOS still blocks the application, open **System Settings → Privacy & Security** and choose **Open Anyway** for SukiFlow.
+1. Download `SukiFlow_macOS_v1.2.0_arm64.dmg`.
+2. Open the DMG file and drag **SukiFlow.app** into the **Applications** folder.
+3. On first launch, right-click SukiFlow → **Open** → **Open**.
+4. If macOS still blocks the app, go to **System Settings → Privacy & Security** and select **Open Anyway** for SukiFlow.
 
-If macOS reports that the application is quarantined and you are certain it came from the official Releases page, run:
+If macOS flags the application as quarantined, you can run:
 
 ```bash
 xattr -dr com.apple.quarantine "/Applications/SukiFlow.app"
 ```
 
-> The current macOS package targets Apple Silicon (`arm64`). Check your Mac model under **Apple menu → About This Mac** before downloading.
+> The macOS build is currently released for Apple Silicon (`arm64`). Check your chip type under **Apple menu → About This Mac** before downloading.
 
 ---
 
 ## Getting started
 
-1. Open SukiFlow and select **LOGIN GOOGLE** to sign in to your SukiFlow account.
-2. Go to **Setting → Linked Accounts**.
-3. Select the service you want to use and choose **Add account**:
+1. Launch SukiFlow and click **LOGIN GOOGLE** to authenticate your SukiFlow profile.
+2. Navigate to **Setting → Linked Accounts**.
+3. Select the desired service and click **Add Account**:
    - Google Flow
    - Google Vids
    - Google Pics
    - Muse AI
-4. Complete sign-in in the browser window opened by SukiFlow.
-5. Return to the relevant feature tab, enter a prompt, and select **Run now**.
+4. Complete login inside the browser window opened by SukiFlow.
+5. Return to the main tab, enter your prompts, and click **Run now**.
 
-> Do not close the automated browser window while SukiFlow is creating images or videos through Google Flow, Google Vids, or Google Pics. SukiFlow uses that browser session to execute tasks and collect results.
+> When SukiFlow is actively generating images or videos via Google Flow, Google Vids, or Google Pics, do not close the automated browser windows. These sessions execute tasks and stream results back to the desktop app.
 
-If a required linked account is missing, SukiFlow displays a setup dialog and can take you directly to the appropriate Linked Accounts section.
+If no active account is detected, SukiFlow displays an informative prompt and guides you directly to the Linked Accounts tab.
+
+![Linked Accounts management](docs/images/linkedaccount.png)
 
 ---
 
@@ -136,227 +144,275 @@ If a required linked account is missing, SukiFlow displays a setup dialog and ca
 
 ### Flow Image
 
-Flow Image supports batch generation with the following controls:
+Flow Image provides high-performance batch image creation:
 
-- Aspect ratios: `16:9`, `9:16`, `1:1`, `4:3`, and `3:4`.
-- Nano Banana 2, Nano Banana 2 Lite, and Nano Banana Pro models.
-- One to four images per prompt.
-- 1K, 2K, or 4K output sizes.
-- Up to four concurrent rows with configurable delay between rows.
-- Direct prompt entry or TXT, CSV, and XLSX import.
-- Automatic character references using `@CharacterName`.
-- Optional watermark processing when supported by the local environment.
-- Run selected rows, retry failed rows, and restore previous sessions.
-- Send completed images directly to Flow Video or Auto Flow.
+- Aspect ratios: `16:9`, `9:16`, `1:1`, `4:3`, `3:4`.
+- Models: **Nano Banana 2**, **Nano Banana 2 Lite**, and **Nano Banana Pro**.
+- Generate 1 to 4 images per prompt.
+- Export resolutions: **1K**, **2K**, or **4K**.
+- Clean **4 images per row** preview grid for fast visual review.
+- Run up to 4 concurrent rows with customizable inter-row delays.
+- Input prompts directly or import from TXT, CSV, and XLSX.
+- Automatically bind character reference images with `@CharacterName` syntax.
+- Automatic model fallback to keep batches running when primary models are rate-limited.
+- Built-in watermark removal support.
+- One-click transfer of completed images to Flow Video or Auto Flow.
 
 ![Flow Image](docs/images/flow-image.png)
 
-### Flow Image queue
+### Flow Image Queue
 
-Select one or more prompts and add them to the queue. Each queued task preserves its own settings and runs in order. The configured concurrency limit applies across active and retried tasks.
+Select one or more prompts to enqueue. Each queued task retains its dedicated configuration and executes in sequence or in parallel according to linked account capacity.
 
-![Flow Image queue](docs/images/flow-image-queue.png)
+![Flow Image Queue](docs/images/flow-image-queue.png)
 
 ### Flow Video
 
-Flow Video creates videos from prompts or Start/End frames:
+Flow Video delivers versatile AI video generation with two image-to-video modes:
 
-- `16:9` and `9:16` aspect ratios.
-- Omni 1.1 Flash and Veo 3.1 Lite, Fast, and Quality modes.
-- 360p or 720p resolution.
-- Four-to-ten-second duration options, depending on model and account availability.
-- Up to four videos per prompt.
-- Start–End frame chaining and direct image transfer from Flow Image or Google Pics.
-- Configurable concurrency, delay, output folder, and watermark processing.
+- **Model selection:**
+  - **Omni 1.1 Flash:** Supports **360p** and **720p** resolutions with durations of **4s, 6s, 8s, or 10s**.
+  - **Veo 3.1 (Lite, Fast, Quality):** 8-second cinematic video generation.
+- **Aspect ratios:** `16:9` (landscape) and `9:16` (portrait).
+- **Two flexible Image-to-Video modes:**
+  1. **Frames mode:** Seamless transition from a required Start image to an optional End image.
+  2. **Ingredients / Reference-to-Video (R2V) mode:** Upload up to **3 reference images** to guide characters (`@Image1`, `@Image2`), scene context, or visual style.
+- **Automatic Fallback to Google Vids:** If Google Flow accounts encounter quota limits or connection errors, SukiFlow automatically routes the prompt and reference images to Google Vids to ensure uninterrupted batch completion.
+- Watermark cleaning, parallelism control, and customizable output destination.
 
 ![Flow Video](docs/images/flow-video.png)
 
 ---
 
+## Google Vids
+
+Google Vids brings both video and image generation into a unified workspace:
+
+### Vids Video
+
+- Generate video from text prompts or up to **3 reference images**.
+- Flexible duration: **3, 4, 5, 6, 8, 10, 12, or 15 seconds** (default 5s).
+- Aspect ratios: `16:9` (landscape), `9:16` (portrait), and `1:1` (square).
+- Resolutions: **720p** or **1080p**.
+- Auto-assign character references via `@CharacterName`.
+- Direct transfer of finished clips into Auto Flow for long-form video composition.
+
+![Google Vids Video](docs/images/google-vids.png)
+
+### Vids Image
+
+- Generate single or batch images with rich artistic presets: *Photography, Vector art, Sketch, Watercolor, Cyberpunk, Background, etc.*
+- Aspect ratios: `16:9`, `9:16`, `1:1`.
+- Full support for reference images and `@CharacterName` tagging.
+
+![Google Vids Image](docs/images/google-vids-image.png)
+
+---
+
 ## Google Pics
 
-Google Pics provides a separate batch image workflow:
+Google Pics offers a dedicated, high-resolution batch image generation pipeline:
 
-- Common image aspect ratios with original, 2K, or 4K exports.
-- Up to four images per prompt.
-- TXT, CSV, and XLSX prompt import.
-- Automatic character matching through `@CharacterName`.
-- Queue execution, retry, previous-session restore, and selected-row controls.
-- Direct transfer of completed images to Flow Video or Auto Flow.
+- Common aspect ratios: `16:9`, `9:16`, `1:1`, `4:3`, `3:4`.
+- Export resolutions: **Original**, **2K JPEG**, or **4K JPEG**.
+- Generate up to 4 images per prompt.
+- Auto-tagging with `@CharacterName`.
+- Up to 3 reference images per task.
+- Queue management, automatic error retries, and session restore.
 
 ![Google Pics](docs/images/google-pics.png)
 
 ---
 
-## Google Vids
+## ChatGPT Image
 
-Google Vids supports prompt and reference-image workflows, per-row result tracking, and transfer of completed clips into Auto Flow for long-form video assembly.
+Integrated image generation powered by ChatGPT models:
 
-- Vids Video and Vids Image workspaces.
-- Automatic use of saved characters when prompts contain `@CharacterName`.
-- Queue management, retry, selected-row execution, and previous sessions.
-- Output to a timestamped job folder or a selected parent directory.
+- **Two operating modes:**
+  - **Text-to-Image:** Detailed image creation from rich descriptions.
+  - **Image-to-Image:** Image transformation guided by up to **5 reference images**.
+- **Quality levels:** `auto`, `high`, `medium`, `low`.
+- **Aspect ratios:** `16:9`, `1:1`, `3:2`, `2:3`, `9:16`.
+- Generate 1 to 4 images per prompt with configurable inter-image delays (`wait_seconds`) to avoid rate limits.
+- Additional styling via the **Style prompt** field.
 
-![Google Vids](docs/images/google-vids.png)
+![ChatGPT Image](docs/images/chatgpt-image.png)
 
 ---
 
 ## Muse AI
 
-Muse AI uses a dedicated browser session and provides controls for aspect ratio, duration, concurrent rows, delay, and output folder.
+Muse AI generates both video and images through automated browser sessions:
+
+- **Muse AI Video:** Aspect ratios `16:9` or `9:16`, recommended 10s duration (prompt-guided 5s–10s), export format options **MP4**, **WebM**, and **MOV**. Accepts up to **5 reference images**.
+- **Muse AI Image:** High-quality image generation with up to **5 reference images**.
+- Customizable timeouts (60s to 900s) for complex video generation jobs.
 
 ![Muse AI](docs/images/muse-ai.png)
 
-> Muse AI may be unavailable in certain countries or for certain accounts. Access depends on availability provided by the Muse platform.
+> Muse AI availability may depend on account eligibility and regional network routing per Muse platform policies.
 
 ---
 
-## Auto Flow
+## Auto Flow (Video Builder)
 
-Auto Flow assembles complete videos from multiple media sources.
+Auto Flow is a full-featured video production studio that combines images, video clips, AI voices, and background music into finished videos for YouTube, TikTok, and social media.
 
-### Images → Video
+### 1. Image → Video (Montage)
 
-- Assemble a folder of images or images transferred from Flow Image and Google Pics.
-- Configure camera movement and visual effects for individual scenes.
-- Generate AI voice-over, use existing audio files, or build a video without narration.
-- Synchronize timeline, subtitles, background music, and final export.
-- Render a short preview before starting the full video build.
+- Build finished videos from a folder of images or items transferred from Flow Image / Google Pics.
+- Per-scene motion effects, panning, and transition timing.
+- Generate AI narration (Gemini, AI33, Edge TTS) or upload voice files.
+- Automated timeline alignment, dynamic subtitles, and background audio ducking.
 
-![Auto Flow Images to Video](docs/images/autoflow-image-to-video.png)
+![Auto Flow Image to Video](docs/images/autoflow-image-to-video.png)
 
-### Videos → Video
+### 2. Videos → Video
 
-- Combine multiple clips into a longer video.
-- Reorder and edit individual scenes.
-- Keep or mute original audio and add narration, music, and subtitles.
+- Concatenate and arrange multiple video clips into a single long-form video.
+- Reorder scenes, trim clips, toggle original audio, and layer narrator voiceovers.
 
 ![Auto Flow Videos to Video](docs/images/autoflow-videos-to-video.png)
 
-### Stock Video
+### 3. Stock Video
 
-- Generate a script from a topic or use an existing script.
-- Find matching footage from Pexels and Pixabay.
-- Arrange footage into scenes and add effects, narration, music, and subtitles.
-- Optionally replace selected scenes with AI video from Google Flow, Google Vids, or Muse AI.
+- Generate storyboard scripts from a topic using AI.
+- Automatically query and download matching high-resolution stock clips from **Pexels** and **Pixabay**.
+- Selectively convert scenes into AI videos using Google Flow, Google Vids, or Muse AI.
+- Export finalized videos complete with voiceover, subtitles, and background audio.
 
 ![Auto Flow Stock Video](docs/images/autoflow-stock-video.png)
 
-Stock Video requires both a **Pexels API Key** and a **Pixabay API Key** under **Setting → General → API Key Settings**. Some script-generation, analysis, or voice steps may require a Gemini API Key or AI33 API Key. If a required key is missing, SukiFlow can open the corresponding settings section.
+### 4. Draw Video
 
-### Draw Video
-
-Draw Video turns a topic or script into illustrated storyboard scenes and combines voice, timing, subtitles, and music into a complete video.
+- Transform scripts or topics into hand-drawn sketch animation videos with synchronized voiceover and music.
 
 ![Auto Flow Draw Video](docs/images/autoflow-draw-video.png)
 
-### Jetflag Video
+### 5. Jetflag Video
 
-Jetflag Video is designed to transform a source video into localized versions for different languages and markets. This feature is currently under development.
+- Video localization pipeline for multi-language and international content adaptation (in active development).
 
 ![Auto Flow Jetflag Video](docs/images/autoflow-jetflag-video.png)
 
 ---
 
-## Character, Visual, Narrative, and Voice libraries
+## Creative Libraries (Character, Visual, Narrative, and Voice)
 
 ### Character
 
-Store one or more reference images for a character. Names are preserved exactly as entered and can be referenced in prompts with `@CharacterName`.
+Store character identity descriptions and reference images. Mention `@CharacterName` in any prompt to automatically inject the character's reference images across Flow, Vids, Pics, or ChatGPT.
 
-![Character library](docs/images/setting-character.png)
+![Character Library](docs/images/setting-character.png)
 
-### Visual
+### Visual Style
 
-Save reusable visual-style presets for multiple projects and prompts.
+Save art style presets (lighting, color palette, camera angles) for instant one-click reuse across projects.
 
-![Visual library](docs/images/setting-visual.png)
+![Visual Style Library](docs/images/setting-visual.png)
 
-### Narrative
+### Narrative Style
 
-Save storytelling styles, content structures, and writing instructions for Auto Flow.
+Store storytelling DNA (Hook opening, pacing, dialogue structure) or use the **Clone Channel Style** tool to analyze YouTube/TikTok links and have AI write scripts in that specific voice.
 
-![Narrative library](docs/images/setting-narrative.png)
+![Narrative Style Library](docs/images/setting-narrative.png)
 
 ### Voice
 
-Manage voice presets, voice IDs, and speed settings for repeated use in video projects.
+Manage AI narrator voices, voice IDs, speed, and pitch settings for consistent audio across all Auto Flow videos.
 
-![Voice library](docs/images/setting-voice.png)
+![Voice Library](docs/images/setting-voice.png)
+
+---
+
+## Webhook API Server
+
+SukiFlow 1.2.0 includes an independent, built-in **REST Webhook API server** (default port `10790`), allowing external automation tools like **n8n, Make.com, Zapier**, or custom Python/cURL scripts to trigger image and video generation remotely.
+
+### Webhook API Highlights:
+
+- **API Key Authentication (`X-API-Key`):** Every generation request is authenticated.
+- **Flexible Network Binding:** Bind strictly to localhost (`127.0.0.1`) or open to the local network (`0.0.0.0` - LAN) so other devices on the same Wi-Fi/LAN can send jobs.
+- **Real-Time Request Logs:** Monitor incoming API calls (HTTP method, route, status code, client IP) directly inside the app settings.
+- **Built-in Webhook Test Playground (`/webhook-test`):** Access `http://127.0.0.1:10789/webhook-test` to test every endpoint interactively, inspect JSON payloads and responses, download outputs, and submit batches of up to 100 prompts concurrently.
+
+![Webhook API Settings](docs/images/webhook-api.png)
+
+![Webhook Test Playground](docs/images/webhook-test-playground.png)
+
+### Primary Endpoints:
+
+| Method | Endpoint | Auth | Description |
+|---|---|:---:|---|
+| `GET` | `/api/health` | No | Check server availability and active task counts |
+| `POST` | `/api/image/generate` | Yes | Generate images via Google Flow, Google Pics, Google Vids Image, Muse AI, or ChatGPT |
+| `POST` | `/api/video/generate` | Yes | Generate video via Google Flow, Google Vids, or Muse AI |
+| `GET` | `/api/status/{task_id}` | Yes | Check progress and retrieve output file URLs |
+| `GET` | `/api/tasks` | Yes | List up to 50 recent tasks |
+| `GET` | `/api/files/{file_id}` | Yes | Download generated image or video files |
+
+📖 For complete payload schemas, cURL/Python examples, and batch guidelines, see the **[Full Webhook API Documentation (WEBHOOK_API.md)](WEBHOOK_API.md)**.
 
 ---
 
 ## Data and privacy
 
-- SukiFlow is a desktop application. Generated images, videos, and project files are saved locally in your selected folders.
-- Sign-in sessions for supported platforms are stored in the application's data area so you do not need to sign in every time the application starts.
-- Signing out of the SukiFlow device does not automatically delete all linked platform accounts. Manage or remove them individually under **Setting → Linked Accounts**.
-- Never share API keys, cookies, browser profiles, or application data folders.
-- SukiFlow uses browser sessions to interact with third-party platforms. You are responsible for complying with the terms and policies of those platforms.
+- SukiFlow is a local desktop application; all generated images, videos, audio files, and project data are saved directly to your local disk.
+- Session cookies and login states are stored securely in local app data so you do not need to log in repeatedly.
+- Logging out of SukiFlow does not erase Linked Accounts; you can toggle, manage, or remove individual accounts in **Setting → Linked Accounts**.
+- Never share your `webhook_api.json`, API keys, session tokens, or browser data folders with others.
+- SukiFlow automates browser actions on third-party services. You are responsible for complying with each platform's terms of service and usage guidelines.
 
-### Default output folders
+### Default output directories
 
-Modules may use these default folders when no custom folder is selected:
-
-| Module | Typical folder |
+| Module | Default location |
 |---|---|
-| Google Flow Image/Video | `Pictures/GoogleFlow_Output` |
-| Google Pics | `Pictures/GooglePics_Output` |
-| Auto Flow | `Pictures/AutoFlow_Output` |
+| Google Flow Image / Video | `~/Pictures/GoogleFlow_Output` |
+| Google Pics | `~/Pictures/GooglePics_Output` |
+| Muse AI | `~/Pictures/MuseAI_Output` |
+| Auto Flow | `~/Pictures/AutoFlow_Output` |
 
 ---
 
 ## Troubleshooting
 
-### Connection status never becomes active
+### 1. Connection status does not turn active
+- SukiFlow stays idle until a task is queued. When a batch starts, the automated browser launches and connects.
+- Do not close browser windows opened by SukiFlow while tasks are running.
 
-- SukiFlow may hide the connection badge while no task is running.
-- When a worker starts, the status changes to **Connecting ...**.
-- When the worker is ready, the status shows the number of active connections.
-- Do not close a browser window opened by SukiFlow while a task is running.
+### 2. "No linked account available" error
+- Open **Setting → Linked Accounts**, select the relevant service (Google Flow, Google Vids, Google Pics, Muse AI), and click **Add Account**. Accounts from one service cannot substitute for another.
 
-### No linked account is available
+### 3. "Access is denied" when updating on Windows
+- Close SukiFlow and any background terminal/browser processes before running the EXE installer. Never click **Skip this file**.
 
-Go to **Setting → Linked Accounts**, choose the correct service, and add an account. A Google Flow account does not automatically replace a Google Vids, Google Pics, or Muse AI account.
+### 4. Webhook API returns 401 Unauthorized
+- Verify that the `X-API-Key` header in your HTTP request matches the API Key displayed in **Setting → Webhook API**.
 
-### Windows installer reports “Access is denied”
+### 5. Webhook API unreachable from LAN devices
+- In **Setting → Webhook API**, switch the IP binding from `This machine only (127.0.0.1)` to `Local network (0.0.0.0)`. Ensure your host firewall allows incoming connections on port `10790`.
 
-Close SukiFlow completely, including related browser and terminal windows, and then run the installer again. Do not select **Skip this file**, because that can leave the installation incomplete.
-
-### Image or video generation is unusually slow
-
-- Confirm that the automated browser is still open and the account remains signed in.
-- Check platform quota, credits, and any warning shown by the provider.
-- Reduce concurrency to one row for diagnosis.
-- Retry with a short prompt and no reference images.
-- Open **Setting → Logs** and save the logs before requesting support.
-
-### Watermark processing is slow or never completes
-
-Watermark processing requires a bundled model and local processing resources. Disable watermark processing temporarily to verify that the main image or video workflow is working. Performance can vary by CPU architecture and machine configuration.
-
-### Muse AI does not work
-
-Muse AI may be restricted by account or region. This does not necessarily indicate an installation problem in SukiFlow.
+### 6. Slow generation or timeouts
+- Check if your linked account has hit platform rate limits or exhausted generation credits.
+- Lower the concurrency limit to 1 row to verify baseline connectivity.
+- Check **Setting → Logs** for real-time error traces.
 
 ---
 
 ## Updates
 
-SukiFlow checks version policy at startup. When a mandatory update is available, the application displays an update notice and the official download link.
-
-Always download official builds from:
+SukiFlow checks for updates upon launch. Always download official releases from:
 
 **[GitHub Releases — SukiFlow](https://github.com/suki-app/sukiflow-doc/releases/latest)**
 
 ---
 
-## Disclaimer
+## Notice
 
-SukiFlow is a workflow automation tool. It is not affiliated with, sponsored by, or endorsed by Google, Meta, Pexels, Pixabay, or any other third-party platform mentioned in this document. All trademarks belong to their respective owners.
+SukiFlow is an automation tool. SukiFlow is not affiliated with, sponsored by, or endorsed by Google, OpenAI, Meta, Pexels, Pixabay, or any third-party platforms mentioned. All product names and trademarks remain the property of their respective owners.
 
 <p align="center">
   <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="72"><br>
-  <strong>SukiFlow 1.0.0</strong><br>
+  <strong>SukiFlow 1.2.0</strong><br>
   © 2026 SukiFlow
 </p>
