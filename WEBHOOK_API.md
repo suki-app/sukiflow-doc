@@ -4,6 +4,8 @@ Webhook API cho phép script, ứng dụng nội bộ và dịch vụ tự độ
 
 > API hoạt động khi SukiFlow đang mở, Webhook Server đang bật và có Linked Account còn khả dụng cho dịch vụ được chọn. Khả năng tạo media còn phụ thuộc quyền truy cập, hạn mức và trạng thái của nền tảng bên thứ ba.
 
+Đối chiếu gần nhất với mã nguồn và kiểm thử thực tế Flow/Muse: **07/11/2026**.
+
 ## Mục lục
 
 - [1. Bật server và chọn địa chỉ](#1-bật-server-và-chọn-địa-chỉ)
@@ -178,7 +180,9 @@ Các field hợp lệ: `enabled` và `all_models` là boolean; `model` là một
   "aspect_ratio": "1:1",
   "export_size": "2k",
   "count": 2,
-  "reference_images": [],
+  "reference_images": [
+    {"filename": "reference.png", "data": "data:image/png;base64,<BASE64_DATA>"}
+  ],
   "clean_watermark": true,
   "save_mode": "job"
 }
@@ -207,8 +211,9 @@ Các field hợp lệ: `enabled` và `all_models` là boolean; `model` là một
 ```
 
 - Hiện chỉ hỗ trợ `mode: "text_to_image"`; mỗi request tạo một ảnh.
+- Có thể bỏ `mode`; server mặc định dùng `text_to_image`.
 - `aspect_ratio`: `16:9`, `9:16`, `1:1`.
-- `style`: `none`, `photography`, `background`, `vector_art`, `sketch`, `watercolor`, `cyberpunk`.
+- `style`: `none`, `photography`, `background`, `vector_art`, `sketch`, `watercolor`, `cyberpunk`. Alias cũng được nhận: `vector art`, `no style`, `no_style`.
 - `timeout`: `30–900` giây; mặc định `240`.
 - `delay`: `0–30` giây; mặc định `2`.
 - Không nhận ảnh tham chiếu. `save_mode` là `job` hoặc `direct`; `base_folder` tùy chọn.
@@ -229,7 +234,7 @@ Các field hợp lệ: `enabled` và `all_models` là boolean; `model` là một
 }
 ```
 
-- `mode`: `text_to_image` hoặc `image_to_image`.
+- `mode`: tùy chọn `text_to_image` hoặc `image_to_image`. Nếu bỏ qua, server suy ra từ ảnh tham chiếu: không có ảnh là Text → Image, có ảnh là Image → Image.
 - `aspect_ratio`: `16:9`, `1:1`, `3:2`, `2:3`, `9:16`.
 - `quality`: `auto`, `high`, `medium`, `low`.
 - `count`: `1–4`.
@@ -290,19 +295,23 @@ Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
 ```
 
 - `model`: `omni_flash`, `veo_3_1_lite`, `veo_3_1_fast`, `veo_3_1_quality`.
-- `mode`: `text_to_video` hoặc `image_to_video`; mặc định `text_to_video`.
+- `mode`: tùy chọn `text_to_video` hoặc `image_to_video`. Nếu bỏ qua, có `start_image` thì suy ra Image → Video; nếu không có thì Text → Video.
 - `aspect_ratio`: `16:9` hoặc `9:16`.
 - `omni_flash`: `video_length` là `4`, `6`, `8` hoặc `10`; `resolution` là `360p` hoặc `720p`.
-- `veo_3_1_*`: thời lượng cố định 8 giây; bỏ `resolution` và không đặt `video_length` khác 8.
+- `veo_3_1_*`: thời lượng cố định 8 giây; có thể bỏ `video_length` hoặc đặt `8`. Không gửi `resolution` (field này chỉ dùng cho `omni_flash`).
 - `count`: `1–4`.
 - `start_image` chỉ dùng với `image_to_video`; `end_image` tùy chọn nhưng cần có `start_image`.
 - Ảnh gửi theo cấu trúc `{ "filename": "...png", "data": "data:image/png;base64,..." }`. Hỗ trợ PNG, JPEG, WebP; tổng kích thước ảnh đầu/cuối tối đa 7 MB.
 - `clean_watermark`: boolean; mặc định `false`.
 - `save_mode`: `job` hoặc `direct`; `base_folder` tùy chọn.
 - `fallback_service`: mặc định `google_vids`; đặt `none` để tắt dự phòng sang Google Vids.
-- Flow thử các tài khoản khả dụng trước. Khi tất cả tài khoản Flow từ chối vì quota/giới hạn, hoặc lỗi khởi tạo project trước bước gửi tạo vẫn còn sau 3 lần thử, task có thể được chuyển sang Google Vids. Timeout không rõ xảy ra trước hay sau khi Flow nhận lệnh tạo không tự gửi lại để tránh tạo trùng.
+- Fallback chỉ xảy ra khi worker phát `JOB_FAILED` với `fallback_eligible=true` và `count=1`. Các trường hợp được worker đánh dấu gồm lỗi quota/giới hạn tài khoản, tài khoản Agent-only, hết tài khoản Flow, timeout kết nối trước khi submit và trường hợp submit không rõ kết quả sau khi đã đối soát project. Lỗi prompt trống và lỗi không được đánh dấu đủ điều kiện sẽ kết thúc task mà không fallback.
 - Google Vids không hỗ trợ `360p`; khi fallback từ Flow `360p`, độ phân giải được nâng lên `720p`. Fallback hiện chỉ áp dụng cho `count=1`.
+- Để giữ yêu cầu Flow `360p`, gửi `fallback_service: "none"`. Đã kiểm thử tạo và tải video Omni Flash `360p`, `4` giây ở cả hai hướng ngang/dọc.
+- Khi Flow báo tạo xong nhưng thiếu link tải hoặc trả link ảnh poster, worker sẽ thử lấy lại MP4 của chính clip đã gửi. Bước khôi phục này không gửi lại prompt tạo video; nếu vẫn không lấy được file hợp lệ, task sẽ thất bại.
 - Khi fallback, task vẫn giữ cùng `task_id`; trường `provider_fallback` trong status cho biết dịch vụ đích, lý do và độ phân giải đã dùng.
+
+**Hook kiểm thử fallback (chỉ dành cho môi trường test):** nếu app khởi chạy với `SUKIFLOW_WEBHOOK_TEST_MODE=1`, có thể gửi `test_force_flow_failure: "quota"` hoặc `"rejected"` để bỏ qua việc gửi request tới Google Flow và phát sinh lỗi giả lập trước submit. Task vẫn đi qua luồng fallback thật sang Google Vids. Hook này chỉ nhận request Flow Video đơn lẻ, `count=1`, `fallback_service="google_vids"`; không dùng trong môi trường production. Nếu biến môi trường không bật, field này bị từ chối.
 
 ### Google Vids Video
 
@@ -322,12 +331,13 @@ Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
 ```
 
 - `model`: `omni` (mặc định; alias `google_vids_ai_video` cũng được nhận).
-- `mode`: `text_to_video` hoặc `image_to_video`.
+- `mode`: tùy chọn `text_to_video` hoặc `image_to_video`. Nếu bỏ qua, không có `reference_images` là Text → Video; có ảnh là Image/Ingredients → Video.
 - `aspect_ratio`: `16:9` hoặc `9:16`.
-- `video_length`: số nguyên `3–10` giây.
+- `video_length`: số nguyên `3–15` giây.
 - `resolution`: `720p` hoặc `1080p`.
 - `count`: hiện chỉ nhận `1`.
-- `reference_images`: tối đa 3 ảnh; bắt buộc với `image_to_video`, không được gửi cùng `text_to_video`. Một ảnh dùng làm Image → Video; nhiều ảnh được chuyển thành Ingredients → Video.
+- `reference_images`: tối đa 3 ảnh. Một ảnh dùng làm Image → Video; nhiều ảnh được chuyển thành Ingredients → Video. Nếu truyền `mode` tường minh, `text_to_video` không nhận ảnh và `image_to_video` yêu cầu ít nhất một ảnh.
+- `character_names`: tùy chọn, tối đa 3 tên nhân vật, mỗi tên tối đa 100 ký tự; chỉ định tên nhân vật tương ứng với ảnh tham chiếu đã gửi.
 - `delay`: `0–30` giây; mặc định `3`.
 - `clean_watermark`: boolean, mặc định `true`.
 - `save_mode`: `job` hoặc `direct`; `base_folder` tùy chọn.
@@ -339,18 +349,47 @@ Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
   "type": "muse_ai",
   "prompt": "A quiet coastal town at sunrise, gentle camera movement",
   "aspect_ratio": "16:9",
-  "video_length": 5,
+  "video_length": 10,
   "format": "mp4",
   "timeout": 420,
+  "reference_images": [],
   "save_mode": "job"
 }
 ```
 
 - `aspect_ratio`: `16:9` hoặc `9:16`.
-- `video_length`: số nguyên `5–10` giây.
+- `video_length`: validator hiện nhận số nguyên `5–10`; nếu bỏ qua, **API vẫn mặc định `5`**, còn giao diện Muse Video mặc định `10`. Nên gửi tường minh `10`.
+- Thời lượng được đưa vào prompt, không phải tham số điều khiển trực tiếp model Muse. Kiểm thử thực tế yêu cầu `5` giây vẫn nhận clip `10` giây; các lượt có ảnh tham chiếu cũng nhận clip `10` giây. Không coi `video_length` là cam kết thời lượng file đầu ra.
 - `format`: `mp4`, `webm`, `mov`.
 - `timeout`: `60–900` giây; mặc định `420`.
-- Muse AI Image chưa được hỗ trợ qua webhook.
+- `reference_images`: tùy chọn, tối đa **5 ảnh** cho mỗi video. Gửi theo cấu trúc ở mục [Ảnh tham chiếu](#7-ảnh-tham-chiếu). Không có ảnh thì tạo từ prompt; có ảnh thì Muse dùng chúng làm ảnh tham chiếu cho video.
+- Khi có ảnh tham chiếu, Muse có thể giữ tỷ lệ ảnh đầu vào thay vì tỷ lệ yêu cầu. Kiểm thử ảnh ngang trả video `1152×768`; ảnh nhân vật dọc trả `672×1152`. Worker có kiểm tra tỷ lệ với sai số cho phép; lệch lớn có thể khiến task `failed` dù Muse đã tạo và tải được clip.
+
+### Muse AI Image
+
+```json
+{
+  "type": "muse_ai",
+  "prompt": "A small fox in a sunlit forest, natural cinematic composition",
+  "aspect_ratio": "16:9",
+  "timeout": 420,
+  "reference_images": [
+    {"filename": "fox-reference.png", "data": "data:image/png;base64,<BASE64_DATA>"}
+  ],
+  "save_mode": "job"
+}
+```
+
+- Gửi qua `POST /api/image/generate`; `type` nhận `muse_ai` (cũng chấp nhận alias `muse`, `muse_image`, `muse_ai_image`).
+- `aspect_ratio`: `16:9` hoặc `9:16`; mặc định `16:9`.
+- `reference_images`: tùy chọn, tối đa **5 ảnh**. Không có ảnh thì tạo từ prompt; có ảnh thì gửi ảnh cùng prompt.
+- `timeout`: `60–900` giây; mặc định `420`.
+- Mỗi request tạo một ảnh; API không nhận `count` hoặc `parallel` cho Muse.
+- Muse Image và Muse Video dùng chung một phiên worker, nên mỗi lần chỉ nhận một task Muse đang chờ/chạy. Gửi task Muse khác trong lúc đó sẽ nhận `409`; chờ task hiện tại kết thúc rồi gửi tiếp.
+- Worker loại ảnh ứng viên trùng nội dung file tham chiếu đầu vào để tránh trả nhầm ảnh upload thành ảnh kết quả. Khi kiểm tra tích hợp, cần tải file và kiểm tra nội dung, không chỉ dựa vào trạng thái `completed`.
+
+**Nhân vật `@Tên` trong Muse:** khi không gửi `reference_images`, worker có thể tìm ảnh nhân vật đã lưu trên chính máy SukiFlow từ tên trong prompt. Tên phải tồn tại trong thư viện máy đó. Khi đã gửi ảnh qua `reference_images`, các đường dẫn ảnh tường minh được ưu tiên; không dựa vào việc tự ghép thêm toàn bộ ảnh từ `@Tên`. Để request độc lập với thư viện cục bộ, gửi đủ ảnh cần dùng trong `reference_images`. Dấu `+` là thao tác trên giao diện; API dùng mảng `reference_images` tương ứng.
+- Hỗ trợ `save_mode` `job`/`direct` và `base_folder`.
 
 ## 7. Ảnh tham chiếu
 
@@ -389,7 +428,7 @@ def reference_image(path):
 
 ## 8. Gom nhiều prompt thành batch
 
-Google Flow Image và Google Flow Video cho phép các request riêng ghép vào cùng một batch bằng `batch_id`. Gửi từng prompt thành một request độc lập; giữ nguyên `batch_id`, `batch_size`, `parallel` và các setting chung cho mọi request thuộc batch. Worker nhận toàn bộ batch rồi duy trì cửa sổ chạy liên tục: khi một prompt xong, prompt đang chờ tiếp theo sẽ tự bắt đầu nếu còn slot, không cần chờ cả nhóm hiện tại hoàn tất.
+Google Flow Image và Google Flow Video cho phép gửi từng prompt thành request riêng rồi ghép chúng vào một batch. Worker duy trì cửa sổ chạy liên tục: khi một prompt xong, prompt đang chờ tiếp theo bắt đầu ngay nếu còn slot, không cần chờ cả nhóm hiện tại hoàn tất.
 
 Ví dụ phần field thêm vào từng request:
 
@@ -401,11 +440,12 @@ Ví dụ phần field thêm vào từng request:
 }
 ```
 
-- `batch_id`: ID dùng chung để ghép các request. Với Flow Video phải dài 8–80 ký tự; với Flow Image là chuỗi tối đa 100 ký tự. Bắt buộc khi `batch_size` lớn hơn 1.
-- `batch_size`: tổng số prompt dự kiến trong batch, `2–100` (tối đa 100 task đang chờ/chạy trên server).
-- `parallel`: số prompt tối đa được chạy đồng thời, `1–4`, không lớn hơn `batch_size`. Với Image, mặc định là `min(batch_size, 4)`; với Video, cần truyền field này.
+- `batch_id`: ID dùng chung. Bắt buộc khi ghép nhiều request; với Flow Video dài `8–80` ký tự, với Flow Image là chuỗi tối đa `100` ký tự.
+- `batch_size`: tổng số prompt trong batch. Flow Image nhận `1–100` (nếu là một request đơn, bỏ các field batch); Flow Video nhận `2–100` khi dùng batch. Server giới hạn tối đa 100 task đang chờ/chạy.
+- `parallel`: số prompt tối đa được chạy đồng thời, `1–4` và không lớn hơn `batch_size`. Flow Image mặc định `min(batch_size, 4)`; Flow Video yêu cầu truyền field này trong batch.
 - Với Flow Image, các request trong batch phải dùng chung `base_folder`, `save_mode`, `model_fallback`, `batch_size`, `parallel`.
 - Với Flow Video, các request trong batch phải dùng chung cấu hình video và `batch_size`, `parallel`.
+- Mỗi request vẫn có `count` riêng (`1–4` ảnh hoặc video cho prompt đó); `batch_size` là số prompt, không phải số media output.
 - Nếu không gửi đủ request, server tự flush các prompt đã nhận sau 120 giây (Image và Video). Các prompt gửi sau thời điểm flush cần dùng `batch_id` mới.
 
 Không dùng batch nếu chỉ tạo một prompt; khi đó bỏ `batch_id`, `batch_size`, `parallel`.
@@ -500,10 +540,10 @@ curl -L "$SUKIFLOW_URL/api/files/FILE_ID" \
 
 | Provider | Ảnh | Video | Ghi chú |
 |---|---|---|---|
-| Google Flow | Có | Có | Image → Image dùng `reference_images`; Flow Video hỗ trợ Text → Video và Start/End Image → Video |
+| Google Flow | Có | Có | Image → Image dùng `reference_images`; Flow Video suy ra Text → Video hoặc Start/End Image → Video từ ảnh đầu vào |
 | Google Pics | Có | Không | Ảnh tham chiếu tối đa 3; hỗ trợ `count=1–4` |
-| Google Vids | Có | Có | Vids Image hiện chỉ Text → Image; Vids Video hỗ trợ Text/Image/Ingredients → Video qua `mode` và ảnh tham chiếu |
+| Google Vids | Có | Có | Vids Image chỉ Text → Image; Vids Video suy ra Text/Image/Ingredients → Video từ `reference_images` |
 | ChatGPT | Có | Không | Webhook chỉ hỗ trợ ChatGPT Image; `count=1–4` |
-| Muse AI | Không | Có | Muse AI Image chưa được hỗ trợ qua webhook |
+| Muse AI | Có | Có | Cả Muse Image và Video nhận tối đa 5 ảnh tham chiếu; mỗi request trả một kết quả |
 
 API key, Linked Account và file kết quả thuộc máy chạy SukiFlow. Provider có thể từ chối tác vụ do hết quota, tài khoản, region hoặc thay đổi giao diện/dịch vụ; hãy luôn kiểm tra trạng thái cuối cùng thay vì chỉ dựa vào HTTP `202`.
