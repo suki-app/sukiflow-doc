@@ -272,7 +272,9 @@ Text → Video:
 }
 ```
 
-Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
+Image → Video hỗ trợ 2 kiểu:
+
+**Kiểu 1: Khung hình đầu / cuối (Frames mode)** dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
 
 ```json
 {
@@ -294,14 +296,41 @@ Image → Video dùng ảnh đầu bắt buộc và ảnh cuối tùy chọn:
 }
 ```
 
+**Kiểu 2: Ảnh tham chiếu (Ingredients / Reference-to-Video mode, tối đa 3 ảnh)** để định hình nhân vật, phong cách hoặc bối cảnh:
+
+```json
+{
+  "type": "google_flow",
+  "mode": "image_to_video",
+  "prompt": "The character in @Image1 is walking through a neon-lit cyberpunk street at night, cinematic 4k",
+  "model": "omni_flash",
+  "aspect_ratio": "16:9",
+  "video_length": 4,
+  "resolution": "360p",
+  "count": 1,
+  "reference_images": [
+    {
+      "filename": "character1.png",
+      "data": "data:image/png;base64,REPLACE_WITH_BASE64"
+    }
+  ],
+  "clean_watermark": false,
+  "fallback_service": "google_vids",
+  "save_mode": "job"
+}
+```
+
 - `model`: `omni_flash`, `veo_3_1_lite`, `veo_3_1_fast`, `veo_3_1_quality`.
-- `mode`: tùy chọn `text_to_video` hoặc `image_to_video`. Nếu bỏ qua, có `start_image` thì suy ra Image → Video; nếu không có thì Text → Video.
+- `mode`: tùy chọn `text_to_video` hoặc `image_to_video`. Nếu bỏ qua, có `start_image` hoặc `reference_images` thì suy ra Image → Video; nếu không có thì Text → Video.
+- `creation_mode`: tùy chọn `frames` hoặc `ingredients`. Server tự động nhận diện: có `reference_images` là `ingredients`, có `start_image` là `frames`.
+- `reference_images`: tối đa 3 ảnh tham chiếu (chỉ dùng cho `image_to_video` kiểu ingredients). Trong prompt có thể gắn tag `@Image1`, `@Image2`, `@Image3` để định danh.
+- Không dùng đồng thời `reference_images` và `start_image`/`end_image` trong cùng một request.
 - `aspect_ratio`: `16:9` hoặc `9:16`.
 - `omni_flash`: `video_length` là `4`, `6`, `8` hoặc `10`; `resolution` là `360p` hoặc `720p`.
 - `veo_3_1_*`: thời lượng cố định 8 giây; có thể bỏ `video_length` hoặc đặt `8`. Không gửi `resolution` (field này chỉ dùng cho `omni_flash`).
 - `count`: `1–4`.
-- `start_image` chỉ dùng với `image_to_video`; `end_image` tùy chọn nhưng cần có `start_image`.
-- Ảnh gửi theo cấu trúc `{ "filename": "...png", "data": "data:image/png;base64,..." }`. Hỗ trợ PNG, JPEG, WebP; tổng kích thước ảnh đầu/cuối tối đa 7 MB.
+- `start_image` chỉ dùng với `image_to_video` kiểu frames; `end_image` tùy chọn nhưng cần có `start_image`.
+- Ảnh gửi theo cấu trúc `{ "filename": "...png", "data": "data:image/png;base64,..." }`. Hỗ trợ PNG, JPEG, WebP; tổng dung lượng ảnh tham chiếu hoặc ảnh đầu/cuối tối đa 7 MB.
 - `clean_watermark`: boolean; mặc định `false`.
 - `save_mode`: `job` hoặc `direct`; `base_folder` tùy chọn.
 - `fallback_service`: mặc định `google_vids`; đặt `none` để tắt dự phòng sang Google Vids.
