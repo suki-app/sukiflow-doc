@@ -5,7 +5,7 @@
 <h1 align="center">SukiFlow</h1>
 
 <p align="center">
-  <strong>Giải pháp tự động hoá tạo ảnh &amp; video AI hàng loạt tối ưu trên các nền tảng.</strong>
+  <strong>Giải pháp tự động hoá tạo ảnh &amp; video AI hàng loạt tối ưu trên các nền tảng hàng đầu.</strong>
 </p>
 
 <table align="center">
@@ -14,13 +14,13 @@
       <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D4?style=flat-square&logo=windows11&logoColor=white" alt="Windows 10/11"><br>
       <strong>SukiFlow cho Windows</strong><br>
       <sub>64-bit · Bộ cài đặt EXE</sub><br><br>
-      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.2.0/SukiFlow_Setup_v1.2.0.exe"><img src="https://img.shields.io/badge/TẢI_BẢN_CÀI-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Tải bản cài SukiFlow cho Windows"></a>
+      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v2.0.0/SukiFlow_Setup_v2.0.0.exe"><img src="https://img.shields.io/badge/TẢI_BẢN_CÀI-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Tải bản cài SukiFlow cho Windows"></a>
     </td>
     <td align="center" width="260">
       <img src="https://img.shields.io/badge/macOS-Apple%20Silicon-10B981?style=flat-square&logo=apple&logoColor=white" alt="macOS Apple Silicon"><br>
       <strong>SukiFlow cho Mac</strong><br>
       <sub>M1 · M2 · M3 · M4</sub><br><br>
-      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v1.2.0/SukiFlow_macOS_v1.2.0_arm64.dmg"><img src="https://img.shields.io/badge/TẢI_BẢN_CÀI-10B981?style=for-the-badge&logo=apple&logoColor=white" alt="Tải bản cài SukiFlow cho Apple Silicon"></a>
+      <a href="https://github.com/suki-app/sukiflow-doc/releases/download/v2.0.0/SukiFlow_macOS_v2.0.0_arm64.dmg"><img src="https://img.shields.io/badge/TẢI_BẢN_CÀI-10B981?style=for-the-badge&logo=apple&logoColor=white" alt="Tải bản cài SukiFlow cho Apple Silicon"></a>
     </td>
     <td align="center" width="260">
       <img src="https://img.shields.io/badge/macOS-Intel-5B5BD6?style=flat-square&logo=intel&logoColor=white" alt="macOS Intel"><br>
@@ -38,28 +38,37 @@
   ·
   <a href="#cài-đặt">Hướng dẫn cài đặt</a>
   ·
-  <a href="WEBHOOK_API.md">Tài liệu Webhook API</a>
+  <a href="#quản-lý-proxy--đổi-ip">Quản lý Proxy Hub</a>
   ·
-  <a href="#khắc-phục-sự-cố">Khắc phục sự cố</a>
+  <a href="#bảng-giá--gói-cước">Gói cước &amp; Bảng giá</a>
+  ·
+  <a href="#chương-trình-giới-thiệu-nhận-hoa-hồng-affiliate">Giới thiệu nhận hoa hồng</a>
+  ·
+  <a href="WEBHOOK_API.md">Tài liệu Webhook API</a>
 </p>
 
-> Phiên bản hiện tại: **SukiFlow 1.2.0**. SukiFlow là ứng dụng desktop dành cho Windows và macOS. Các tính năng phụ thuộc vào dịch vụ bên thứ ba có thể thay đổi theo tài khoản, khu vực, hạn mức và chính sách của từng nền tảng.
+> Phiên bản hiện tại: **SukiFlow v2.0.0**. SukiFlow là ứng dụng desktop dành cho Windows và macOS. Các tính năng phụ thuộc vào dịch vụ bên thứ ba có thể thay đổi theo tài khoản, khu vực, hạn mức và chính sách của từng nền tảng.
 
 ---
 
 ## Tổng quan
 
-SukiFlow tập trung nhiều quy trình tạo ảnh và video AI hàng đầu vào một ứng dụng duy nhất. Bạn có thể nhập prompt hàng loạt, quản lý nhiều tài khoản liên kết, chạy tác vụ theo hàng đợi song song, lưu lại phiên làm việc, chuyển kết quả giữa các công cụ mà không phải tổ chức file thủ công, và tích hợp tự động hoá qua máy chủ Webhook API tích hợp sẵn.
+SukiFlow tập trung nhiều quy trình tạo ảnh và video AI hàng đầu thế giới vào một ứng dụng duy nhất. Bạn có thể nhập prompt hàng loạt, quản lý nhiều tài khoản liên kết, gán proxy / IPv6 riêng biệt cho từng tài khoản, chạy tác vụ song song đa luồng thông minh, lưu phiên làm việc, chuyển kết quả giữa các công cụ mà không phải tổ chức file thủ công, và tích hợp tự động hoá qua máy chủ Webhook API tích hợp sẵn.
 
-Các nhóm chức năng chính:
+### Các nhóm chức năng chính:
 
-- **Google Flow:** Tạo ảnh và video hàng loạt với Flow Image (Nano Banana 2/Pro, 1K/2K/4K, xem 4 ảnh 1 dòng) và Flow Video (Omni Flash 360p/720p, Veo 3.1, chế độ Khung hình &amp; Ảnh tham chiếu Ingredients, tự động fallback sang Google Vids).
+- **Google Flow:** Tạo ảnh và video hàng loạt với Flow Image (Nano Banana 2/Pro, 1K/2K/4K, xem 4 ảnh 1 dòng) và Flow Video (Omni Flash 360p/720p, Veo 3.1, chế độ Khung hình &amp; Ảnh tham chiếu Ingredients, tự động fallback sang Google Vids, tự động tắt Flow Agent mode, tự động click nút đăng nhập).
+- **Grok AI Studio:** Hỗ trợ tạo ảnh và video AI chân thực bằng mô hình Grok, tùy chỉnh tỉ lệ khung hình, phong cách và không bị kiểm duyệt gò bó.
+- **ChatGPT Image:** Tạo ảnh qua ChatGPT với cả 2 chế độ Văn bản → Ảnh (Text-to-Image) và Ảnh → Ảnh (Image-to-Image, tối đa 5 ảnh tham chiếu), tuỳ chỉnh độ nét và phong cách.
+- **Muse AI:** Hỗ trợ cả tạo video (16:9, 9:16, 5–10s, MP4/WebM/MOV) và tạo ảnh với tối đa 5 ảnh tham chiếu, kết nối qua proxy độc lập.
 - **Google Vids:** Tạo video (3–15s, 16:9/9:16/1:1, tối đa 3 ảnh tham chiếu) và tạo ảnh Vids Image theo nhiều phong cách chuyên nghiệp.
 - **Google Pics:** Tạo ảnh hàng loạt chất lượng cao, xuất ảnh gốc, 2K hoặc 4K, hỗ trợ ảnh tham chiếu và nhận diện nhân vật tự động.
-- **ChatGPT Image:** Tạo ảnh qua ChatGPT với cả 2 chế độ Văn bản → Ảnh (Text-to-Image) và Ảnh → Ảnh (Image-to-Image, tối đa 5 ảnh tham chiếu), tuỳ chỉnh độ nét và phong cách.
-- **Muse AI:** Hỗ trợ cả tạo video (16:9, 9:16, 5–10s, MP4/WebM/MOV) và tạo ảnh với tối đa 5 ảnh tham chiếu.
 - **Auto Flow (Video Builder):** Dựng video hoàn chỉnh từ ảnh, ghép video dài, dựng Stock Video từ kịch bản, Draw Video và Jetlag Video.
-- **Linked Accounts:** Quản lý độc lập và tự động luân phiên tài khoản Google Flow, Google Vids, Google Pics và Muse AI.
+- **Quản lý Proxy Hub (IPv6 &amp; Proxy ngoài):** Tự động tạo và gán địa chỉ IPv6 riêng biệt từ pool máy local hoặc gán Proxy ngoài HTTP/SOCKS5 cho từng tài khoản, tránh trùng IP, chống checkpoint an toàn.
+- **Gói cước &amp; Nâng cấp Plan:** Bảng so sánh rõ ràng các gói Basic (Miễn phí), Pro và Ultra; hỗ trợ thanh toán tự động qua mã VietQR PayOS kích hoạt tức thì.
+- **Quà tặng đặc biệt cho gói ULTRA:** Tặng mã Gift Code bản quyền **SukiMail Free** (trị giá 100.000đ/tháng) giúp nuôi và quản lý hộp thư email tự động.
+- **Chương trình Affiliate (Giới thiệu nhận hoa hồng):** Nhận link giới thiệu riêng, hưởng hoa hồng hấp dẫn định kỳ khi bạn bè đăng ký và thanh toán.
+- **Linked Accounts:** Quản lý độc lập và tự động luân phiên tài khoản Google Flow, Google Vids, Google Pics, Muse AI, ChatGPT và Grok.
 - **Thư viện sáng tạo:** Lưu trữ Character, Visual, Narrative và Voice preset để tái sử dụng xuyên suốt các dự án.
 - **Máy chủ Webhook API &amp; Test Playground:** Tích hợp máy chủ REST Webhook API độc lập ngay trong ứng dụng (port 10790) kết hợp trang playground `/webhook-test` để tích hợp với n8n, Make, Zapier và các hệ thống backend.
 - **Quản lý tác vụ thông minh:** Chạy ngay, chạy các mục đã chọn, chạy lại mục lỗi, hàng đợi FIFO, cơ chế chống nghẽn và khôi phục phiên cũ.
@@ -70,11 +79,16 @@ Các nhóm chức năng chính:
 
 - [Cài đặt](#cài-đặt)
 - [Bắt đầu sử dụng](#bắt-đầu-sử-dụng)
+- [Quản lý Proxy &amp; Đổi IP (Proxy Hub)](#quản-lý-proxy--đổi-ip)
+- [Bảng giá &amp; Gói cước (Plans)](#bảng-giá--gói-cước)
+- [Quà tặng SukiMail bản quyền cho gói ULTRA](#quà-tặng-sukimail-bản-quyền-cho-gói-ultra)
+- [Chương trình Giới thiệu nhận hoa hồng (Affiliate)](#chương-trình-giới-thiệu-nhận-hoa-hồng-affiliate)
 - [Google Flow](#google-flow)
-- [Google Vids](#google-vids)
-- [Google Pics](#google-pics)
+- [Grok AI Studio](#grok-ai-studio)
 - [ChatGPT Image](#chatgpt-image)
 - [Muse AI](#muse-ai)
+- [Google Vids](#google-vids)
+- [Google Pics](#google-pics)
 - [Auto Flow (Video Builder)](#auto-flow-video-builder)
 - [Thư viện Character, Visual, Narrative và Voice](#thư-viện-character-visual-narrative-và-voice)
 - [Máy chủ Webhook API](#máy-chủ-webhook-api)
@@ -89,8 +103,8 @@ Các nhóm chức năng chính:
 
 | Nền tảng | Phiên bản đề xuất | Gói cài đặt |
 |---|---|---|
-| Windows | Windows 10/11 64-bit | `SukiFlow_Setup_v1.2.0.exe` |
-| macOS Apple Silicon | macOS 12 trở lên | `SukiFlow_macOS_v1.2.0_arm64.dmg` |
+| Windows | Windows 10/11 64-bit | `SukiFlow_Setup_v2.0.0.exe` |
+| macOS Apple Silicon | macOS 12 trở lên | `SukiFlow_macOS_v2.0.0_arm64.dmg` |
 | macOS Intel | Đang hoàn thiện bản demo | Sắp phát hành |
 
 Gói cài đặt chính thức đã bao gồm đầy đủ các thành phần cần thiết để chạy ứng dụng. Người dùng cuối không cần tự cài Python hoặc FFmpeg.
@@ -99,18 +113,18 @@ Gói cài đặt chính thức đã bao gồm đầy đủ các thành phần c�
 
 1. Tải **SukiFlow Setup** bằng nút ở đầu trang.
 2. Đóng phiên bản SukiFlow đang chạy trước khi cài hoặc cập nhật.
-3. Mở `SukiFlow_Setup_v1.2.0.exe` và hoàn tất trình cài đặt.
+3. Mở `SukiFlow_Setup_v2.0.0.exe` và hoàn tất trình cài đặt.
 4. Khởi chạy SukiFlow từ Start Menu hoặc shortcut trên Desktop.
 5. Nếu Windows SmartScreen xuất hiện, chọn **More info** → **Run anyway**. Chỉ tải bộ cài từ trang Releases chính thức này.
 
 ### macOS
 
-1. Tải `SukiFlow_macOS_v1.2.0_arm64.dmg`.
+1. Tải `SukiFlow_macOS_v2.0.0_arm64.dmg`.
 2. Mở file DMG và kéo **SukiFlow.app** vào thư mục **Applications**.
 3. Ở lần mở đầu tiên, bấm chuột phải vào SukiFlow → **Open** → **Open**.
 4. Nếu macOS vẫn chặn ứng dụng, vào **System Settings → Privacy & Security** và chọn **Open Anyway** cho SukiFlow.
 
-Nếu macOS báo ứng dụng bị cách ly và bạn chắc chắn file được tải từ Releases chính thức, có thể chạy:
+Nếu macOS báo ứng dụng bị cách ly và bạn chắc chắn file được tải từ Releases chính thức, có thể chạy lệnh:
 
 ```bash
 xattr -dr com.apple.quarantine "/Applications/SukiFlow.app"
@@ -122,21 +136,110 @@ xattr -dr com.apple.quarantine "/Applications/SukiFlow.app"
 
 ## Bắt đầu sử dụng
 
-1. Mở SukiFlow và chọn **LOGIN GOOGLE** để đăng nhập tài khoản SukiFlow.
+1. Mở SukiFlow và chọn **LOGIN GOOGLE** để đăng nhập tài khoản SukiFlow của bạn.
 2. Vào **Setting → Linked Accounts**.
 3. Chọn dịch vụ cần dùng rồi bấm **Thêm tài khoản**:
    - Google Flow
+   - Muse AI
+   - ChatGPT
+   - Grok AI
    - Google Vids
    - Google Pics
-   - Muse AI
-4. Hoàn tất đăng nhập trong cửa sổ trình duyệt được mở bởi SukiFlow.
-5. Quay lại tab chức năng, nhập prompt và chọn **Chạy ngay**.
+4. Cửa sổ trình duyệt tự động mở ra. Đối với Google Flow, SukiFlow sẽ tự động click nút bắt đầu để mở thẳng trang đăng nhập tài khoản Google. Hãy đăng nhập tài khoản của bạn và chờ trong giây lát để hệ thống lưu phiên.
+5. *(Tùy chọn)* Bấm nút **🌐 Quản lý Proxy** để gán địa chỉ IPv6 hoặc Proxy ngoài cho từng tài khoản nhằm tránh bị giới hạn IP.
+6. Quay lại tab chức năng mong muốn, nhập danh sách prompt và chọn **Chạy ngay**.
 
-> Khi SukiFlow đang tạo ảnh hoặc video qua Google Flow, Google Vids hoặc Google Pics, không đóng cửa sổ trình duyệt tự động được mở. Đây là phiên làm việc mà ứng dụng sử dụng để điều khiển tác vụ và nhận kết quả.
+> Khi SukiFlow đang tạo ảnh hoặc video, không đóng cửa sổ trình duyệt tự động được mở. Đây là phiên làm việc mà ứng dụng sử dụng để điều khiển tác vụ và nhận kết quả.
 
-Nếu chưa có tài khoản phù hợp, SukiFlow sẽ hiển thị hướng dẫn và đưa bạn đến đúng tab Linked Accounts để thêm tài khoản.
+---
 
-![Quản lý tài khoản liên kết](docs/images/linkedaccount.png)
+## Quản lý Proxy & Đổi IP
+
+Khi vận hành nhiều tài khoản AI cùng lúc trên một máy, việc dùng chung một địa chỉ IP công cộng (IPv4/IPv6) dễ dẫn đến tình trạng bị các nền tảng (Google, OpenAI, Muse...) đánh cờ spam, khóa tài khoản hoặc giới hạn tần suất tạo (rate limit).
+
+SukiFlow 2.0 tích hợp trung tâm **Proxy Hub** mạnh mẽ ngay trong giao diện Quản lý tài khoản:
+
+### 1. Gán IPv6 nội bộ tự động (Local IPv6 Pool)
+- **Cơ chế hoạt động:** SukiFlow tự động dò quét dải mạng `/64` của nhà mạng trên máy bạn, trích xuất hàng chục địa chỉ IPv6 công cộng khả dụng và khởi chạy một proxy server nội bộ siêu tốc.
+- **Gán IP riêng biệt:** Mỗi tài khoản (Google Flow, Muse AI, ChatGPT...) được cấp phát một cổng local riêng (`:28001`, `:28002`, `:28003`...) ứng với một địa chỉ IPv6 thực tế duy nhất ra ngoài Internet.
+- **Không tốn chi phí:** Tận dụng 100% đường truyền Internet sẵn có, không cần bỏ tiền mua proxy hàng tháng.
+- **Tính năng một chạm:**
+  - `⚡ Tự động gán tất cả`: Gán tự động cho mọi tài khoản chưa có IP.
+  - `Đổi`: Đổi sang một địa chỉ IPv6 khác trong pool còn trống chỉ trong 1 giây.
+  - `Test`: Kiểm tra kết nối và hiển thị địa chỉ IP thực tế mà máy chủ Google/Muse nhìn thấy.
+  - `Bỏ`: Hủy gán proxy khi muốn quay về IP mặc định của máy.
+
+### 2. Gán Proxy ngoài (External HTTP / SOCKS5)
+- Hỗ trợ thêm Proxy mua ngoài chuẩn `HTTP`, `HTTPS` hoặc `SOCKS5`.
+- Hỗ trợ cả 2 định dạng phổ biến:
+  - `IP:Port` (Proxy mở hoặc IP tĩnh xác thực theo địa chỉ IP)
+  - `IP:Port:Username:Password` (Proxy có tài khoản và mật khẩu bảo mật)
+- Gán độc lập cho từng profile tài khoản hoặc nhập theo danh sách để tự động chia đều.
+- Trình duyệt tự động gắn cấu hình proxy an toàn, che giấu dấu vân tay tự động hóa (`navigator.webdriver`).
+
+---
+
+## Bảng giá & Gói cước
+
+SukiFlow cung cấp các gói dịch vụ linh hoạt, phù hợp từ người dùng cá nhân mới bắt đầu đến các studio sản xuất nội dung quy mô lớn:
+
+| Tính năng | GÓI BASIC | GÓI PRO 🔥 | GÓI ULTRA 👑 |
+| :--- | :---: | :---: | :---: |
+| **Giá cước (tháng)** | **0đ** (Miễn phí vĩnh viễn) | **79.000đ** *(gốc 100k)* | **149.000đ** *(gốc 200k)* |
+| **Số tài khoản liên kết (Linked Accounts)** | **5** tài khoản (tổng toàn app) | **10** tài khoản | **100** tài khoản |
+| **Số luồng chạy đồng thời (Concurrency)** | 1 luồng | **4 luồng song song** | **4 luồng song song** |
+| **Giới hạn Prompts** | 5 prompt / lượt chạy | **Không giới hạn** | **Không giới hạn** |
+| **Dịch vụ mở khóa** | Google Flow, Muse AI | **Mở khóa tất cả** (Flow, Muse, ChatGPT, Grok, Vids, Pics) | **Mở khóa tất cả** toàn bộ dịch vụ |
+| **Độ phân giải xuất ảnh** | 1K | **2K / 4K sắc nét** | **2K / 4K sắc nét** |
+| **Xóa Watermark / Logo tự động** | ✕ | **Có** | **Có** |
+| **Model Fallback dự phòng** | ✕ | **Có** (Chuyển tự động khi lỗi) | **Có** |
+| **Máy chủ Webhook API (HTTP / n8n / Make)** | ✕ | ✕ | **Độc quyền ULTRA** |
+| **Quà tặng SukiMail Free** | ✕ | ✕ | **🎁 Tặng mã bản quyền SukiMail (100k/tháng)** |
+| **Hỗ trợ kỹ thuật** | Cộng đồng | Ưu tiên | **VIP 1-1 trực tiếp** |
+
+### Ưu đãi chu kỳ thanh toán
+- **Thanh toán 6 tháng:** Giảm thêm **10%** tổng hóa đơn.
+- **Thanh toán 1 năm:** Tiết kiệm tới **20%** tổng hóa đơn.
+
+### Thanh toán VietQR PayOS tự động
+- Tích hợp cổng thanh toán trực tiếp qua VietQR.
+- Sau khi chọn gói và kỳ hạn, hệ thống tạo mã QR động. Bạn chỉ cần mở app ngân hàng quét mã, hệ thống sẽ **tự động kích hoạt gói cước trong vòng 3–5 giây** mà không cần chờ nhân viên xác nhận.
+- Hỗ trợ cơ chế bảo lưu và quy đổi số dư còn lại (Credit PRO) khi nâng cấp từ PRO lên ULTRA.
+
+---
+
+## Quà tặng SukiMail bản quyền cho gói ULTRA
+
+Khi đăng ký hoặc nâng cấp lên gói **SukiFlow ULTRA**, bạn sẽ nhận được một món quà đặc biệt:
+
+> 🎁 **TẶNG MIỄN PHÍ MÃ BẢN QUYỀN SUKIMAIL (TRỊ GIÁ 100.000đ/THÁNG)**
+
+### SukiMail là gì?
+[SukiMail](https://github.com/suki-app) là phần mềm desktop chuyên dụng để quản lý, nuôi và kiểm tra hộp thư email tự động số lượng lớn:
+- Tự động kiểm tra trạng thái sống/chết (Live check) hàng ngàn email.
+- Tự động nhận mã OTP, link xác thực kích hoạt tài khoản.
+- Tự động dọn dẹp thư rác, phân loại hộp thư thông minh.
+- Phối hợp hoàn hảo với SukiFlow trong việc tạo và duy trì hàng loạt tài khoản Google Flow, Muse AI, ChatGPT...
+
+### Cách nhận quà:
+Sau khi thanh toán thành công gói ULTRA, mã Gift Code SukiMail sẽ xuất hiện ngay trong tab **Cài đặt → Gói tài khoản**. Bạn chỉ cần bấm nút **Sao chép mã** 📋 và nhập vào phần mềm SukiMail để kích hoạt hoàn toàn miễn phí.
+
+---
+
+## Chương trình Giới thiệu nhận hoa hồng (Affiliate)
+
+SukiFlow cung cấp chương trình Đối tác Giới thiệu (Affiliate / Referral Program) giúp bạn tạo thêm nguồn thu nhập thụ động bền vững:
+
+### Quyền lợi đối tác:
+- **Mã giới thiệu & Đường link riêng:** Mỗi tài khoản SukiFlow sau khi đăng nhập đều được cấp một mã khách hàng và đường dẫn giới thiệu duy nhất.
+- **Hoa hồng định kỳ:** Khi người được giới thiệu thanh toán các gói dịch vụ (PRO, ULTRA), bạn sẽ nhận được phần trăm hoa hồng trực tiếp.
+- **Bảng điều khiển trực quan:**
+  - Theo dõi tổng số lượt bạn bè đã đăng ký qua link.
+  - Xem tổng hoa hồng tích lũy và số dư khả dụng theo thời gian thực.
+  - Lịch sử giao dịch chi tiết, minh bạch.
+- **Rút tiền nhanh chóng:** Yêu cầu chuyển khoản hoa hồng về tài khoản ngân hàng của bạn dễ dàng ngay trên giao diện.
+
+Để mở bảng điều khiển, bấm vào biểu tượng **Hộp quà** 🎁 cạnh tên gói ở góc trên bên trái ứng dụng hoặc vào mục **Gói tài khoản → Giới thiệu nhận hoa hồng**.
 
 ---
 
@@ -158,14 +261,6 @@ Flow Image hỗ trợ tạo ảnh hàng loạt với hiệu suất vượt trộ
 - Tuỳ chọn làm sạch watermark tự động.
 - Chuyển ảnh hoàn thành trực tiếp sang Flow Video hoặc Auto Flow chỉ với 1 cú click.
 
-![Flow Image](docs/images/flow-image.png)
-
-### Hàng đợi Flow Image
-
-Bạn có thể chọn một hoặc nhiều prompt rồi đưa vào hàng đợi. Mỗi tác vụ giữ cấu hình riêng và được thực thi tuần tự hoặc song song theo hạn mức tài khoản. Giới hạn số luồng đồng thời luôn được áp dụng nghiêm ngặt để đảm bảo an toàn cho tài khoản.
-
-![Hàng đợi Flow Image](docs/images/flow-image-queue.png)
-
 ### Flow Video
 
 Flow Video cung cấp khả năng tạo video mạnh mẽ với 2 chế độ tạo video từ ảnh:
@@ -178,49 +273,21 @@ Flow Video cung cấp khả năng tạo video mạnh mẽ với 2 chế độ t�
   1. **Khung hình (Frames mode):** Nối tiếp chuyển động mượt mà từ ảnh đầu (Start frame) đến ảnh cuối (End frame).
   2. **Ảnh tham chiếu (Ingredients / R2V mode):** Tải lên tối đa **3 ảnh tham chiếu** để AI bám sát nhận diện nhân vật (`@Image1`, `@Image2`), phong cách hoặc bối cảnh.
 - **Tự động dự phòng (Fallback to Google Vids):** Khi tài khoản Flow hết quota hoặc gặp sự cố kết nối, SukiFlow có thể tự động chuyển tiếp prompt và ảnh tham chiếu sang Google Vids để tiếp tục tạo video mà không làm gián đoạn chuỗi công việc.
-- Tuỳ chọn làm sạch watermark, điều chỉnh số luồng và chọn thư mục lưu trữ.
-
-![Flow Video](docs/images/flow-video.png)
-
----
-
-## Google Vids
-
-Google Vids tích hợp cả hai chức năng tạo Video và tạo Ảnh trong cùng một giao diện làm việc:
-
-### Vids Video
-
-- Tạo video từ văn bản hoặc từ tối đa **3 ảnh tham chiếu**.
-- Thời lượng linh hoạt: **3, 4, 5, 6, 8, 10, 12 hoặc 15 giây** (mặc định 5s).
-- Tỷ lệ khung hình: `16:9` (Landscape), `9:16` (Portrait) và `1:1` (Square).
-- Độ phân giải: **720p** hoặc **1080p**.
-- Tự động nhận diện nhân vật qua cú pháp `@TênNhânVật`.
-- Chuyển nhanh video hoàn thành sang Auto Flow để ghép nối thành video dài.
-
-![Google Vids Video](docs/images/google-vids.png)
-
-### Vids Image
-
-- Tạo ảnh đơn lẻ hoặc hàng loạt với các preset phong cách phong phú: *Photography, Vector art, Sketch, Watercolor, Cyberpunk, Background, v.v.*
-- Tỷ lệ: `16:9`, `9:16`, `1:1`.
-- Hỗ trợ ảnh tham chiếu và gán nhân vật `@TênNhânVật`.
-
-![Google Vids Image](docs/images/google-vids-image.png)
+- **Tự động hóa thông minh v2.0:**
+  - Tự động tắt công tắc `Flow Agent mode` để tránh lỗi prompt khi tài khoản đang bật chế độ Agent.
+  - Tự động đóng các dialog cập nhật / carousel giới thiệu tính năng của Google Flow.
+  - Tự động click `Create with Google Flow` để mở thẳng màn hình đăng nhập Google khi thêm tài khoản.
 
 ---
 
-## Google Pics
+## Grok AI Studio
 
-Google Pics cung cấp quy trình tạo ảnh hàng loạt độc lập với chất lượng sắc nét:
+Grok AI Studio tích hợp khả năng sinh ảnh và video đỉnh cao từ mô hình Grok:
 
-- Hỗ trợ các tỷ lệ ảnh phổ biến: `16:9`, `9:16`, `1:1`, `4:3`, `3:4`.
-- Kích thước xuất ảnh: **Gốc (Original)**, **2K JPEG** hoặc **4K JPEG**.
-- Tạo tối đa 4 ảnh trên mỗi prompt.
-- Tự động nhận diện nhân vật qua cú pháp `@TênNhânVật`.
-- Hỗ trợ tối đa 3 ảnh tham chiếu cho mỗi tác vụ.
-- Quản lý hàng đợi, tự động thử lại khi lỗi và mở lại phiên làm việc cũ.
-
-![Google Pics](docs/images/google-pics.png)
+- Tạo ảnh chân thực với mức độ tự do sáng tạo cao, không bị kiểm duyệt gắt gao.
+- Hỗ trợ sinh ảnh từ văn bản hoặc kết hợp ảnh tham chiếu.
+- Tự động hóa quá trình nhập prompt, nhận diện kết quả và tải file về máy.
+- Hỗ trợ chạy đa luồng và liên kết nhiều tài khoản Grok.
 
 ---
 
@@ -236,8 +303,6 @@ Tích hợp trực tiếp khả năng tạo ảnh từ mô hình ChatGPT:
 - Tạo từ 1 đến 4 ảnh cho mỗi prompt, hỗ trợ thiết lập thời gian chờ (`wait_seconds`) giữa các ảnh để tránh giới hạn tần suất.
 - Hỗ trợ thêm phong cách bổ sung qua trường **Style prompt**.
 
-![ChatGPT Image](docs/images/chatgpt-image.png)
-
 ---
 
 ## Muse AI
@@ -246,11 +311,40 @@ Muse AI hỗ trợ tạo cả Video và Ảnh thông qua phiên trình duyệt t
 
 - **Muse AI Video:** Tạo video với tỷ lệ `16:9` hoặc `9:16`, thời lượng khuyến nghị 10 giây (hỗ trợ điều khiển qua prompt 5s–10s), định dạng xuất linh hoạt **MP4**, **WebM**, **MOV**. Nhận tối đa **5 ảnh tham chiếu**.
 - **Muse AI Image:** Tạo ảnh chất lượng cao theo prompt hoặc tối đa **5 ảnh tham chiếu**.
+- **Tích hợp Proxy:** Hỗ trợ cấu hình Proxy IPv6 nội bộ hoặc Proxy ngoài cho từng tài khoản Muse để tránh bị chặn IP từ xa.
 - Hỗ trợ cấu hình timeout tuỳ chỉnh (60s đến 900s) cho các video phức tạp.
 
-![Muse AI](docs/images/muse-ai.png)
+---
 
-> Muse AI có thể yêu cầu tài khoản được cấp quyền hoặc cấu hình mạng tương thích theo chính sách của Muse.
+## Google Vids
+
+Google Vids tích hợp cả hai chức năng tạo Video và tạo Ảnh trong cùng một giao diện làm việc:
+
+### Vids Video
+- Tạo video từ văn bản hoặc từ tối đa **3 ảnh tham chiếu**.
+- Thời lượng linh hoạt: **3, 4, 5, 6, 8, 10, 12 hoặc 15 giây** (mặc định 5s).
+- Tỷ lệ khung hình: `16:9` (Landscape), `9:16` (Portrait) và `1:1` (Square).
+- Độ phân giải: **720p** hoặc **1080p**.
+- Tự động nhận diện nhân vật qua cú pháp `@TênNhânVật`.
+- Chuyển nhanh video hoàn thành sang Auto Flow để ghép nối thành video dài.
+
+### Vids Image
+- Tạo ảnh đơn lẻ hoặc hàng loạt với các preset phong cách phong phú: *Photography, Vector art, Sketch, Watercolor, Cyberpunk, Background, v.v.*
+- Tỷ lệ: `16:9`, `9:16`, `1:1`.
+- Hỗ trợ ảnh tham chiếu và gán nhân vật `@TênNhânVật`.
+
+---
+
+## Google Pics
+
+Google Pics cung cấp quy trình tạo ảnh hàng loạt độc lập với chất lượng sắc nét:
+
+- Hỗ trợ các tỷ lệ ảnh phổ biến: `16:9`, `9:16`, `1:1`, `4:3`, `3:4`.
+- Kích thước xuất ảnh: **Gốc (Original)**, **2K JPEG** hoặc **4K JPEG**.
+- Tạo tối đa 4 ảnh trên mỗi prompt.
+- Tự động nhận diện nhân vật qua cú pháp `@TênNhânVật`.
+- Hỗ trợ tối đa 3 ảnh tham chiếu cho mỗi tác vụ.
+- Quản lý hàng đợi, tự động thử lại khi lỗi và mở lại phiên làm việc cũ.
 
 ---
 
@@ -258,145 +352,59 @@ Muse AI hỗ trợ tạo cả Video và Ảnh thông qua phiên trình duyệt t
 
 Auto Flow là xưởng dựng video hoàn chỉnh, kết hợp các tài nguyên hình ảnh, video clip, giọng đọc AI và nhạc nền thành các tác phẩm video hoàn thiện cho YouTube, TikTok, Facebook Reels.
 
-### 1. Ảnh → Video (Montage)
-
-- Dựng video hoàn chỉnh từ một thư mục ảnh hoặc từ ảnh được chuyển sang từ Flow Image / Google Pics.
-- Tuỳ chỉnh hiệu ứng chuyển động và góc máy riêng cho từng phân cảnh.
-- Tạo giọng đọc AI (hỗ trợ Gemini, AI33, Edge TTS) hoặc tải lên file voice thu sẵn.
-- Tự động canh chỉnh timeline, tạo phụ đề động và trộn nhạc nền.
-
-![Auto Flow Ảnh sang Video](docs/images/autoflow-image-to-video.png)
-
-### 2. Videos → Video
-
-- Ghép nối nhiều video clip ngắn thành một video dài liền mạch.
-- Sắp xếp thứ tự, cắt gọt phân cảnh, bật/tắt âm thanh gốc của clip.
-- Lồng thêm giọng đọc dẫn chuyện, nhạc nền và phụ đề tự động.
-
-![Auto Flow Videos sang Video](docs/images/autoflow-videos-to-video.png)
-
-### 3. Stock Video
-
-- Tự động lên ý tưởng và kịch bản phân cảnh từ một chủ đề cho trước.
-- Tự động tìm kiếm và tải video stock chất lượng cao từ **Pexels** và **Pixabay**.
-- Linh hoạt chuyển đổi từng phân cảnh sang Video AI bằng Google Flow, Google Vids hoặc Muse AI.
-- Tự động xuất video với đầy đủ voice, nhạc nền và phụ đề.
-
-![Auto Flow Stock Video](docs/images/autoflow-stock-video.png)
-
-### 4. Draw Video
-
-- Chuyển kịch bản hoặc chủ đề thành video hoạt họa phong cách nét vẽ (Hand-drawn / Sketch animation), kết hợp giọng đọc và nhịp điệu sinh động.
-
-![Auto Flow Draw Video](docs/images/autoflow-draw-video.png)
-
-### 5. Jetlag Video
-
-- Module chuyển đổi video gốc sang các phiên bản đa ngôn ngữ cho thị trường quốc tế (đang hoàn thiện).
-
-![Auto Flow Jetlag Video](docs/images/autoflow-jetlag-video.png)
+1. **Ảnh → Video (Montage):** Dựng video hoàn chỉnh từ thư mục ảnh, tạo chuyển động camera, chèn giọng đọc AI và phụ đề tự động.
+2. **Videos → Video:** Ghép nối nhiều clip ngắn thành video dài liền mạch, xử lý âm thanh gốc và lồng nhạc nền.
+3. **Stock Video:** Tự động sinh kịch bản theo chủ đề, tự tìm và tải video stock bản quyền từ **Pexels** / **Pixabay**, kết hợp tạo phân cảnh AI khi cần.
+4. **Draw Video:** Dựng video vẽ hoạt họa (Hand-drawn / Sketch animation) sinh động theo kịch bản.
+5. **Jetlag Video:** Module chuyển đổi video đa ngôn ngữ cho thị trường quốc tế.
 
 ---
 
 ## Thư viện Character, Visual, Narrative và Voice
 
-### Character (Nhân vật)
-
-Lưu trữ thông tin và ảnh tham chiếu của nhân vật. Khi nhập prompt, bạn chỉ cần gõ `@TênNhânVật`, SukiFlow sẽ tự động đính kèm ảnh tham chiếu của nhân vật đó vào Google Flow, Google Vids, Google Pics hoặc ChatGPT.
-
-![Thư viện Character](docs/images/setting-character.png)
-
-### Visual (Phong cách hình ảnh)
-
-Lưu các preset phong cách mỹ thuật (Lighting, Palette, Art style, Camera) để tái sử dụng nhanh chóng mà không cần gõ lại prompt dài.
-
-![Thư viện Visual](docs/images/setting-visual.png)
-
-### Narrative (Phong cách kể chuyện)
-
-Lưu trữ các DNA văn phong kịch bản (cách mở đầu Hook, nhịp điệu lời thoại, cấu trúc hồi) hoặc sử dụng tính năng **Sao chép phong cách** từ đường link kênh YouTube/TikTok để AI viết kịch bản theo đúng giọng điệu mong muốn.
-
-![Thư viện Narrative](docs/images/setting-narrative.png)
-
-### Voice (Giọng đọc)
-
-Quản lý danh sách giọng đọc AI, voice ID, tốc độ và cao độ để áp dụng đồng bộ trong Auto Flow.
-
-![Thư viện Voice](docs/images/setting-voice.png)
+- **Character (Nhân vật):** Lưu ảnh mẫu của nhân vật. Khi viết prompt chỉ cần gõ `@TênNhânVật`, SukiFlow tự đính kèm ảnh mẫu vào các nền tảng sinh ảnh/video.
+- **Visual (Phong cách):** Lưu các preset ánh sáng, bố cục, mỹ thuật để tái sử dụng nhanh chóng.
+- **Narrative (Kịch bản):** Lưu văn phong dẫn dắt, DNA câu chuyện hoặc sao chép phong cách từ link YouTube/TikTok.
+- **Voice (Giọng đọc):** Quản lý các giọng đọc AI, cao độ, tốc độ cho Auto Flow.
 
 ---
 
 ## Máy chủ Webhook API
 
-SukiFlow 1.2.0 tích hợp sẵn một **máy chủ REST Webhook API độc lập** (cổng mặc định `10790`), cho phép kết nối SukiFlow với các nền tảng tự động hoá như **n8n, Make.com, Zapier**, hoặc script Python / cURL để tạo ảnh và video từ xa mà không cần thao tác thủ công trên giao diện.
-
-### Điểm nổi bật của Webhook API:
+SukiFlow tích hợp sẵn một **máy chủ REST Webhook API độc lập** (cổng mặc định `10790`), cho phép kết nối SukiFlow với các nền tảng tự động hoá như **n8n, Make.com, Zapier**, hoặc script Python / cURL để tạo ảnh và video từ xa:
 
 - **Bảo mật bằng Khóa API (`X-API-Key`):** Mọi request tạo media đều được xác thực an toàn.
-- **Điều khiển mạng linh hoạt:** Có thể chọn chỉ chạy nội bộ trên máy (`127.0.0.1`) hoặc mở rộng cho mạng cục bộ (`0.0.0.0` - LAN) để các máy khác trong cùng mạng gọi API.
-- **Theo dõi nhật ký thời gian thực:** Xem lịch sử gọi API (phương thức, đường dẫn, mã HTTP, IP client) ngay trong giao diện cài đặt.
-- **Trang Webhook Playground (`/webhook-test`):** Giao diện thử nghiệm trực quan tích hợp sẵn tại `http://127.0.0.1:10789/webhook-test` giúp bạn test nhanh mọi endpoint, xem mã JSON gửi đi/nhận về, kiểm tra tải file kết quả và gửi batch tới 100 prompt đồng thời.
+- **Điều khiển mạng linh hoạt:** Chạy nội bộ (`127.0.0.1`) hoặc mở rộng cho mạng cục bộ (`0.0.0.0` - LAN).
+- **Trang Webhook Playground (`/webhook-test`):** Giao diện thử nghiệm trực quan tích hợp sẵn tại `http://127.0.0.1:10789/webhook-test`.
 
-![Bảng điều khiển Webhook API](docs/images/webhook-api.png)
-
-![Trang Webhook Test Playground](docs/images/webhook-test-playground.png)
-
-### Danh sách Endpoint chính:
-
-| Phương thức | Endpoint | Yêu cầu Auth | Mô tả |
-|---|---|:---:|---|
-| `GET` | `/api/health` | Không | Kiểm tra trạng thái máy chủ Webhook và số task đang xử lý |
-| `POST` | `/api/image/generate` | Có | Tạo ảnh qua Google Flow, Google Pics, Google Vids Image, Muse AI hoặc ChatGPT |
-| `POST` | `/api/video/generate` | Có | Tạo video qua Google Flow, Google Vids hoặc Muse AI |
-| `GET` | `/api/status/{task_id}` | Có | Tra cứu tiến độ và URL kết quả của task |
-| `GET` | `/api/tasks` | Có | Liệt kê tối đa 50 task gần nhất |
-| `GET` | `/api/files/{file_id}` | Có | Tải file ảnh hoặc video đã hoàn thành về máy |
-
-📖 Xem hướng dẫn tích hợp chi tiết, schema dữ liệu và code mẫu cURL / Python tại: **[Tài liệu Webhook API đầy đủ (WEBHOOK_API.md)](WEBHOOK_API.md)**.
+📖 Xem hướng dẫn chi tiết tại: **[Tài liệu Webhook API đầy đủ (WEBHOOK_API.md)](WEBHOOK_API.md)**.
 
 ---
 
 ## Dữ liệu và quyền riêng tư
 
-- SukiFlow là ứng dụng desktop cục bộ; toàn bộ file ảnh, video, kịch bản và dữ liệu dự án được lưu trực tiếp trên ổ cứng máy bạn theo thư mục đã chọn.
-- Phiên đăng nhập của các nền tảng được lưu an toàn trong vùng dữ liệu ứng dụng để không phải đăng nhập lại mỗi khi mở phần mềm.
-- Đăng xuất thiết bị trong SukiFlow không xoá Linked Accounts; bạn có thể quản lý, bật/tắt hoặc xoá từng tài khoản trong **Setting → Linked Accounts**.
-- Không chia sẻ file cấu hình `webhook_api.json`, API Key, cookie hoặc profile trình duyệt cho người khác.
-- SukiFlow sử dụng trình duyệt để tương tác tự động với các nền tảng bên thứ ba. Bạn chịu trách nhiệm tuân thủ điều khoản dịch vụ và chính sách của từng nền tảng tương ứng.
-
-### Thư mục đầu ra mặc định
-
-| Module | Thư mục mặc định |
-|---|---|
-| Google Flow Image / Video | `~/Pictures/GoogleFlow_Output` |
-| Google Pics | `~/Pictures/GooglePics_Output` |
-| Muse AI | `~/Pictures/MuseAI_Output` |
-| Auto Flow | `~/Pictures/AutoFlow_Output` |
+- Toàn bộ file ảnh, video, kịch bản được lưu trực tiếp trên máy tính của bạn theo thư mục đã chọn.
+- Phiên đăng nhập được mã hóa và lưu an toàn trong thư mục dữ liệu ứng dụng.
+- Đăng xuất tài khoản SukiFlow không làm mất danh sách Linked Accounts hay Proxy đã cấu hình.
+- Ứng dụng tuân thủ tiêu chuẩn bảo mật, không gửi cookie hay mật khẩu ra máy chủ bên ngoài.
 
 ---
 
 ## Khắc phục sự cố
 
-### 1. Trạng thái kết nối không chuyển sang hoạt động
-- Khi chưa có tác vụ, SukiFlow ở chế độ chờ. Khi bắt đầu chạy prompt, worker sẽ mở cửa sổ trình duyệt và kết nối.
-- Tuyệt đối không tắt cửa sổ trình duyệt tự động được mở bởi SukiFlow trong lúc tác vụ đang chạy.
+### 1. Báo đạt giới hạn tài khoản (Gói Basic tối đa 5 Linked Accounts)
+- Hệ thống tính giới hạn dựa trên **tổng số lượng tài khoản duy nhất của mọi dịch vụ gộp lại** trên máy. Nếu bạn có 2 Flow, 2 Muse, 1 ChatGPT thì tổng đã là 5 tài khoản.
+- Để thêm tài khoản mới, bạn có thể xóa bớt tài khoản cũ hoặc nâng cấp lên gói **PRO** (10 tài khoản) hoặc **ULTRA** (100 tài khoản).
 
-### 2. Báo lỗi "Chưa có Linked Account khả dụng"
-- Mở **Setting → Linked Accounts**, chọn đúng dịch vụ (Google Flow, Google Vids, Google Pics, Muse AI) rồi bấm **Thêm tài khoản**. Tài khoản của dịch vụ này không tự thay thế cho dịch vụ khác.
+### 2. Trình duyệt mở ra ở landing page mà không đăng nhập được
+- SukiFlow v2.0 đã có cơ chế tự động click nút "Create with Google Flow" / "Sign in". Hãy để trình duyệt mở tự nhiên trong 3-5 giây để trang tải xong và chuyển hướng sang màn hình đăng nhập Google.
 
-### 3. Cài đè trên Windows báo “Access is denied”
-- Đóng hoàn toàn SukiFlow và các tiến trình nền liên quan, sau đó chạy lại bộ cài đặt EXE. Không bấm **Skip this file**.
+### 3. Tài khoản bị hạn chế tốc độ hoặc chặn mạng
+- Mở **Setting → Linked Accounts → Quản lý Proxy**.
+- Bấm **⚡ Tự động gán tất cả** để gán địa chỉ IPv6 riêng biệt cho từng tài khoản, hoặc thêm Proxy ngoài (HTTP/SOCKS5).
 
-### 4. Webhook API báo lỗi 401 Unauthorized
-- Kiểm tra header `X-API-Key` trong request đã khớp chính xác với Khóa API trong **Setting → Webhook API** chưa.
-
-### 5. Gọi Webhook từ máy khác trong mạng LAN không được
-- Vào **Setting → Webhook API**, tại ô IP chuyển từ `Chỉ máy này (127.0.0.1)` sang `Mạng LAN (0.0.0.0)`. Đảm bảo tường lửa (Firewall) trên máy cài SukiFlow cho phép mở cổng `10790`.
-
-### 6. Tác vụ tạo ảnh hoặc video phản hồi chậm
-- Kiểm tra tài khoản có bị giới hạn tốc độ (rate limit) hoặc hết hạn mức/credit trên nền tảng không.
-- Thử giảm số luồng chạy đồng thời xuống 1 để kiểm tra.
-- Mở **Setting → Logs** để xem chi tiết log lỗi thực tế.
+### 4. Cài đè trên Windows báo “Access is denied”
+- Đóng hoàn toàn SukiFlow (kiểm tra Task Manager để chắc chắn không còn tiến trình chạy ngầm), sau đó chạy lại file cài đặt EXE.
 
 ---
 
@@ -410,10 +418,10 @@ SukiFlow tự động kiểm tra chính sách phiên bản khi khởi động. L
 
 ## Lưu ý
 
-SukiFlow là công cụ hỗ trợ tự động hoá quy trình sáng tạo. SukiFlow không thuộc, không được tài trợ và không được xác nhận bởi Google, OpenAI, Meta, Pexels, Pixabay hoặc các nền tảng bên thứ ba được nhắc đến. Mọi tên thương hiệu thuộc về chủ sở hữu tương ứng.
+SukiFlow là công cụ hỗ trợ tự động hoá quy trình sáng tạo. SukiFlow không thuộc, không được tài trợ và không được xác nhận bởi Google, OpenAI, xAI, Meta, Pexels, Pixabay hoặc các nền tảng bên thứ ba được nhắc đến. Mọi tên thương hiệu thuộc về chủ sở hữu tương ứng.
 
 <p align="center">
   <img src="docs/images/sukiflow-logo.png" alt="SukiFlow" width="72"><br>
-  <strong>SukiFlow 1.2.0</strong><br>
+  <strong>SukiFlow v2.0.0</strong><br>
   © 2026 SukiFlow
 </p>
